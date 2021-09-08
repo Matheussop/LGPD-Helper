@@ -1,0 +1,12 @@
+{
+  "name": "LGPD-Helper",
+  "displayName": "LGPD-Helper",
+  "expo": {
+    "name": "LGPD-Helper",
+    "slug": "LGPD-Helper",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  }
+}
