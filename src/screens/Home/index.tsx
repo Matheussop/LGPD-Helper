@@ -3,11 +3,6 @@ import { Feather } from "@expo/vector-icons";
 
 import {
    Container,
-   Header,
-   TitleWreapper,
-   ImageProfile,
-   Title,
-   LogoutButton,
    Content,
    TextInfo,
    ListSteps,
@@ -16,12 +11,19 @@ import { Alert, StatusBar, View } from 'react-native';
 import { useTheme } from 'styled-components';
 import { AdequacyStep } from '../../components/AdequacyStep';
 
-const data = [
+export interface IListSteps{
+  title: string;
+  statusText: string;
+  progress?: number;
+}
+
+const data: IListSteps[] = [
   {title: 'Adeguação Manual de Regras',statusText: 'Completo', progress: 20},
   {title: 'Política de dados',statusText: 'Completo', progress: 20},
   {title: 'Currículo',statusText: 'Completo', progress: 20},
   {title: 'Termo de desligamento',statusText: 'Completo', progress: 20},
   {title: 'Imagens',statusText: 'Completo', progress: 20},
+  {title: 'Biometria',statusText: 'Completo', progress: 20},
 ]
 
 export function Home() {
@@ -46,16 +48,8 @@ export function Home() {
        backgroundColor="transparent"
        translucent
       />
-      <Header>
-        <TitleWreapper>
-          <ImageProfile source={{uri : 'https://avatars.githubusercontent.com/u/36748285?v=4'}}/>
-          <Title>Olá {'\n'} Matheus</Title>
-        </TitleWreapper>
-        <LogoutButton onPress={handleSignOut}>
-          <Feather name="power" size={24} color={theme.colors.shape}/>
-        </LogoutButton>
-      </Header>
       <Content>
+        
         <TextInfo>
           Para ver mais detalhes sobre uma adequação basta
           clicar nela que será redirecionado para a página

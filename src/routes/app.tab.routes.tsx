@@ -4,6 +4,10 @@ import { useTheme } from 'styled-components'
 import { MaterialIcons } from '@expo/vector-icons'
 import { Platform } from 'react-native';
 import { Home } from '../screens/Home';
+import { HelperRoutes } from './helper.stack.routes';
+import { HomeRoutes } from './home.stack.routes';
+import { Profile } from '../screens/Profile';
+import { ProfileRoutes } from './profile.stack.routes';
 
 const { Navigator, Screen } = createBottomTabNavigator();
  export function AppTabRoutes() {
@@ -13,31 +17,31 @@ const { Navigator, Screen } = createBottomTabNavigator();
         screenOptions={{
           headerShown: false,
           tabBarActiveTintColor: theme.colors.main,
-          tabBarInactiveTintColor: theme.colors.text,
+          tabBarInactiveTintColor: theme.colors.text_light,
           tabBarStyle: {
             paddingVertical: Platform.OS == 'ios' ? 20 : 0,
             height: 60,
           }
         }}
       >
-        <Screen name="teste" component={Home} 
+        <Screen name="Ajuda" component={HelperRoutes} 
+          options={{
+            tabBarIcon: (({ size, color}) => (
+              <MaterialIcons name="help" color={color} size={size}/>
+            ))
+          }}
+        />
+        <Screen name="Home" component={HomeRoutes} 
           options={{
             tabBarIcon: (({ size, color}) => (
               <MaterialIcons name="format-list-bulleted" color={color} size={size}/>
             ))
           }}
         />
-        <Screen name="Home" component={Home} 
+        <Screen name="Configurações" component={ProfileRoutes} 
           options={{
             tabBarIcon: (({ size, color}) => (
-              <MaterialIcons name="home" color={color} size={size}/>
-            ))
-          }}
-        />
-        <Screen name="teste2" component={Home} 
-          options={{
-            tabBarIcon: (({ size, color}) => (
-              <MaterialIcons name="pie-chart" color={color} size={size}/>
+              <MaterialIcons name="settings" color={color} size={size}/>
             ))
           }}
         />

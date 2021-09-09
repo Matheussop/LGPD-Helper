@@ -1,12 +1,12 @@
-import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import { BorderlessButton } from 'react-native-gesture-handler'
-import { Dimensions, FlatList } from "react-native";
-import { IListSteps } from '.'
+import { RFValue } from 'react-native-responsive-fontsize';
+import { IHelperSection } from '.';
+import { IConcepts } from '.';
+import { FlatList } from 'react-native'
 
-export const Container = styled.View`
+export const Container = styled.ScrollView`
   flex: 1;
-
   background-color: ${({ theme }) => theme.colors.background_primary};
 `;
 
@@ -50,15 +50,27 @@ export const TextInfo = styled.Text`
   font-family: ${({ theme }) => theme.fonts.medium};
   color: ${({ theme }) => theme.colors.title};
   text-align: justify;
-
   margin: 23px 0;
-
   line-height: ${RFValue(18)}px;
-  
 `;
 
-export const ListSteps = styled(
-  FlatList as new () => FlatList<IListSteps>
+export const TitleConcepts = styled.Text`
+  font-size: ${RFValue(16)}px;
+  font-family: ${({ theme }) => theme.fonts.medium};
+  color: ${({ theme }) => theme.colors.title};
+  text-align: justify;
+  margin: 20px 0;
+  line-height: ${RFValue(18)}px;
+`;
+
+export const ListSection = styled(
+  FlatList as new () => FlatList<IHelperSection>
+  ).attrs({
+  showsVerticalScrollIndicator: false,
+})``
+
+export const ListConcepts = styled(
+  FlatList as new () => FlatList<IConcepts>
   ).attrs({
   showsVerticalScrollIndicator: false,
 })``

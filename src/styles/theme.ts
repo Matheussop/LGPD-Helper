@@ -3,8 +3,8 @@ export default {
     background_primary: '#F0F2F5',
     background_secundary: '#FFFF',
 
-    text: '#969CB2',
-    text_light: '#EEEEEE',
+    text: '#1A1B1D',
+    text_light: '#969CB2',
 
     text_detail: '#AEAEB3',
     title: '#47474D',
@@ -15,7 +15,9 @@ export default {
     main_dark: '#1F3E52',
 
     shape: '#E1E1E8',
-    shape_dark: '#29292E'
+    shape_dark: '#29292E',
+
+    success: '#76EE59',
   },
 
   fonts: {
