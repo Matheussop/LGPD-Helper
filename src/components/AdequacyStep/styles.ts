@@ -18,8 +18,8 @@ export const StatusCircle = styled.View`
   z-index: 2;
 `;
 export const StatusBar = styled.View`
-  margin-top: -2px;
-  margin-bottom: -2px;
+  margin-top: -5px;
+  margin-bottom: -5px;
   width: 5px;
   height: 70px;
   border-radius: 10px;

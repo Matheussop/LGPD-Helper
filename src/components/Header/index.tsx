@@ -8,11 +8,13 @@ import {
    TitleWreapper,
    ImageProfile,
    Title,
-   LogoutButton,
+   LogoutButton
 } from './styles';
+import { useAuth } from '../../hooks/auth';
 
 export function Header() {
   const theme = useTheme();
+  const {user, signOut} = useAuth();
 
   function handleSignOut(){
     Alert.alert('Tem certeza ?', 'Lembre-se, que se você sair, irá precisar de internet para conectar-se novamente.',[
@@ -22,7 +24,7 @@ export function Header() {
       },
       {
         text: 'Sair',
-        onPress: () => {},
+        onPress: () => signOut(),
       }
     ]);
   }
@@ -30,8 +32,8 @@ export function Header() {
   return (
     <Container>
       <TitleWreapper>
-        <ImageProfile source={{uri : 'https://avatars.githubusercontent.com/u/36748285?v=4'}}/>
-        <Title>Olá {'\n'} Matheus</Title>
+        {user.photo ?  <ImageProfile source={{uri : user.photo}}/> : null}
+        <Title>Olá {'\n'}{user.name}</Title>
       </TitleWreapper>
       <LogoutButton onPress={handleSignOut}>
         <Feather name="power" size={24} color={theme.colors.shape}/>

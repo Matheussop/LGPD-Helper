@@ -10,6 +10,7 @@ interface IUser{
   id: string,
   name: string,
   email: string,
+  consultantName?: string,
   photo?: string
 }
 
@@ -17,6 +18,7 @@ interface IAuthContextData{
   user: IUser;
   signInWithGoogle(userType: 'consultor' | 'cliente' | 'autoavaliação'): Promise<void>;
   signOut(): Promise<void>;
+  updatedUser: (user: IUser) => Promise<void>;
   userStorageLoading: boolean;
 }
 
@@ -65,6 +67,14 @@ function AuthProvider({ children }: AuthProviderProps){
     setUser({} as IUser);
   }
 
+  async function updatedUser(user: IUser){
+    try {
+      setUser(user);
+    } catch (error: any) {
+      throw new Error(error)
+    }
+  }
+
   useEffect(() => {
     setUserStorageLoading(true);
 
@@ -84,6 +94,7 @@ function AuthProvider({ children }: AuthProviderProps){
       user,
       signInWithGoogle,
       signOut,
+      updatedUser,
       userStorageLoading
       }}>
       { children }

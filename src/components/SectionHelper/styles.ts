@@ -1,6 +1,6 @@
 import { RFValue, RFPercentage } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
-import { RectButtonProps, RectButton } from 'react-native-gesture-handler'
+import { BorderlessButton, RectButton } from 'react-native-gesture-handler'
 
 export const Container = styled.View`
   margin-bottom: 16px;
@@ -30,7 +30,7 @@ export const Text = styled.Text`
   padding-bottom: 10px;
 `;
 
-export const Footer = styled(RectButton)``;
+export const Footer = styled(BorderlessButton)``;
 
 export const WrapperFooter = styled.View`
   border-top-width: 1px;

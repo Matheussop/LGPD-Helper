@@ -49,10 +49,11 @@ export function Profile() {
   const navigation = useNavigation();
   const netInfo = useNetInfo();
 
-  // const { user, signOut, updatedUser} = useAuth();
+  const { user, updatedUser} = useAuth();
   const [option, setOption] = useState<"dataEdit" | "aplication">("dataEdit");
-  const [name, setName] = useState("");
-  const [avatar, setAvatar] = useState("");
+  const [name, setName] = useState(user.name);
+  const [consultantName, setConsultantName] = useState(user.consultantName);
+  const [avatar, setAvatar] = useState(user.photo);
   const [isNotifyPush, setIsNotifyPush] = useState(false);
   const [isNotifyEmail, setIsNotifyEmail] = useState(false);
   const [isSyncronizeWifi, setIsSyncronizeWifi] = useState(false);
@@ -97,15 +98,13 @@ export function Profile() {
 
       await schema.validate({ name });
 
-      // await updatedUser({
-      //   id: user.id,
-      //   user_id: user.user_id,
-      //   email: user.email,
-      //   name: name,
-      //   avatar: avatar,
-      //   driver_license: '',
-      //   token: user.token,
-      // });
+      await updatedUser({
+        id: user.id,
+        email: user.email,
+        name: name,
+        consultantName: consultantName,
+        photo: avatar,
+      });
 
       Alert.alert("Perfil atualizado!");
     } catch (error) {
@@ -116,24 +115,7 @@ export function Profile() {
       }
     }
   }
-
-  function handleSignOut() {
-    Alert.alert(
-      "Tem certeza ?",
-      "Lembre-se, que se você sair, irá precisar de internet para conectar-se novamente.",
-      [
-        {
-          text: "Cancelar",
-          onPress: () => {},
-        },
-        {
-          text: "Sair",
-          onPress: () => {},
-        },
-      ]
-    );
-  }
-
+;  
   return (
     <Container>
       <KeyboardAvoidingView behavior="position" enabled>
@@ -176,7 +158,7 @@ export function Profile() {
                 <Section>
                   <Input
                     iconName="user"
-                    // defaultValue={user.name}
+                    defaultValue={user.name}
                     value={name}
                     onChangeText={setName}
                     autoCapitalize="sentences"
@@ -194,9 +176,10 @@ export function Profile() {
                   <Input
                     iconName="user"
                     // defaultValue={user.email}
-                    defaultValue={"Matheus"}
+                    defaultValue={user.consultantName}
+                    value={user.consultantName}
+                    onChangeText={setConsultantName}
                     textInput={"Nome Consultor"}
-                    editable={false}
                   />
                   <WrapperButtons>
                     <Button

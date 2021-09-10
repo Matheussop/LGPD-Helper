@@ -23,6 +23,7 @@ const { Navigator, Screen } = createBottomTabNavigator();
             height: 60,
           }
         }}
+        initialRouteName="Home"
       >
         <Screen name="Ajuda" component={HelperRoutes} 
           options={{

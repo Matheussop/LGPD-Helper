@@ -14,7 +14,7 @@ const { Navigator, Screen } = createStackNavigator();
         header: props => <Header/>
       }}
     >
-      <Screen name="Helper"  component={Helper} />
+      <Screen name="Helper"  component={Helper}/>
     </Navigator>
   );
 }

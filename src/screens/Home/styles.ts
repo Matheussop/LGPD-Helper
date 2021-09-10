@@ -2,7 +2,7 @@ import { RFValue } from 'react-native-responsive-fontsize';
 import styled from 'styled-components/native';
 import { BorderlessButton } from 'react-native-gesture-handler'
 import { Dimensions, FlatList } from "react-native";
-import { IListSteps } from '.'
+import { IStep } from '.'
 
 export const Container = styled.View`
   flex: 1;
@@ -58,7 +58,7 @@ export const TextInfo = styled.Text`
 `;
 
 export const ListSteps = styled(
-  FlatList as new () => FlatList<IListSteps>
+  FlatList as new () => FlatList<IStep>
   ).attrs({
   showsVerticalScrollIndicator: false,
 })``
