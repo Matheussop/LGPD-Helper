@@ -11,7 +11,7 @@ import { TouchableWithoutFeedback, Keyboard, Alert } from "react-native";
 import { Container, Form } from "./styles";
 import { InputForm } from "../../components/InputForm";
 import { DatePickerForm } from "../../components/DatePickerForm";
-
+import { InputMaskedForm } from "../../components/InputMaskedForm";
 
 
 interface FormData {
@@ -24,15 +24,14 @@ interface FormData {
 
 export function RegisterCompany() {
   const theme = useTheme();
-
   const schema = Yup.object().shape({
     companyName: Yup.string().required("Nome é obrigatório"),
     cnpj: Yup
     .string()
-    // .matches(
-    //   /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/,
-    //   "CPNJ inválido"
-    //   ),
+    .matches(
+      /^\d{2}\.\d{3}\.\d{3}\/\d{4}\-\d{2}$/,
+      "CPNJ inválido"
+    )
     .required("O CNPJ é obrigatório"),
     dateInitConsult: Yup.string().required(
       "A data de ínicio da consultoria é obrigatório"
@@ -60,7 +59,6 @@ export function RegisterCompany() {
     };
 
     try {
-      reset();
       console.log(newCompany);
     } catch (error) {
       Alert.alert("Não foi possível salvar as informações");
@@ -78,9 +76,10 @@ export function RegisterCompany() {
             control={control}
             error={errors.companyName && errors.companyName.message}
           />
-          <InputForm
+          <InputMaskedForm
             name="cnpj"
-            iconName="briefcase"
+            iconName="clipboard"
+            type="cnpj"
             textInput="Cnpj"
             control={control}
             error={errors.cnpj && errors.cnpj.message}
@@ -101,7 +100,7 @@ export function RegisterCompany() {
           />
           <InputForm
             name="category"
-            iconName="clipboard"
+            iconName="tag"
             textInput="Categoria"
             control={control}
             error={errors.category && errors.category.message}

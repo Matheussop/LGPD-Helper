@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { InputStep } from "../../components/InputStep";
 import * as DocumentPicker from 'expo-document-picker';
 import { Feather } from "@expo/vector-icons";
+import { IPickerOptions } from '../../components/SelectInput';
 
 import { Container, 
   Description, 
@@ -18,14 +19,13 @@ import { Container,
 } from "./styles";
 
 import {
-  StatusBar,
-  KeyboardAvoidingView,
   TouchableWithoutFeedback,
   Keyboard,
   Alert,
   View,
 } from "react-native";
 import theme from "../../styles/theme";
+import { SelectInput } from "../../components/SelectInput";
 
 const data = [
   {
@@ -45,6 +45,16 @@ const data = [
     label: "Observação",
     textDescripiton: "Alguma Observação a ser colocada ? ",
   },
+  {
+    id: 4,
+    label: "Categoria",
+    options: [
+      {value: 'tecnologia', label: 'Tecnologia'},
+      {value: 'alimentao', label: 'Alimentão'},
+      {value: 'saude', label: 'Saúde'},
+    ] as IPickerOptions[],
+    textDescripiton: "Alguma Observação a ser colocada ? ",
+  },
 ];
 
 interface IFile { 
@@ -59,6 +69,7 @@ export function StepDetails() {
   const [value, setValue] = useState([""]);
   const [listFiles, setListFiles] = useState<IFile[]>([] as IFile[]);
   const [listImages, setListImages] = useState<IFile[]>([] as IFile[]);
+  const [selectValue, setSelectValue] = useState('');
 
   function changeValue(index: number, newvalue: string) {
     value[index] = newvalue;
@@ -120,15 +131,19 @@ export function StepDetails() {
                 label={data[1].label}
                 textDescripiton={data[1].textDescripiton}
               />
+               <SelectInput  
+                value={selectValue}
+                onValueChange={setSelectValue}
+                label={data[3].label} textDescripiton={data[3].textDescripiton} options={data[3].options}/>
               <InputStep
                 label={data[1].label}
                 textDescripiton={data[1].textDescripiton}
               />
+             
               <InputStep
                 label={data[2].label}
                 textDescripiton={data[2].textDescripiton}
                 multiline={true}
-                numberOfLines={10}
                 more={false}
               />
               {/* {data.map((item, index) => 

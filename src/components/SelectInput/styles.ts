@@ -1,40 +1,33 @@
-import { TextInput } from 'react-native';
 import { RFValue } from 'react-native-responsive-fontsize';
 import styled, { css } from 'styled-components/native';
+import {Picker} from '@react-native-picker/picker';
 import { RectButton } from 'react-native-gesture-handler'
-
-interface ContainerProps { 
-  isFocused: boolean;
-}
 
 export const Container = styled.View`
   width: 100%;
   margin-bottom: 15px;
+  min-height: 120px;
 `;
 
 export const WrapperInput = styled.View`
   margin-bottom: 8px;
-`;
-
-export const InputText = styled(TextInput)<ContainerProps>`
-  background-color: ${({ theme }) => theme.colors.background_secundary};
-  flex: 1;
-  min-height: 50px;
-  max-height: 200px;
-  color: ${({theme}) => theme.colors.text};
-  font-family: ${({ theme }) => theme.fonts.primary_400};
-  font-size: ${RFValue(12)}px;
-  
   border-radius: ${RFValue(10)}px;
   border-width: 2px;
   border-color: ${({ theme }) => theme.colors.main_dark};
-  padding: 0 10px;
+  background-color: ${({ theme }) => theme.colors.background_secundary};
+  flex: 1;
+  min-height: 40px;
   z-index: 2;
+`;
 
-  ${({ theme, isFocused }) => isFocused && css`
-    border-bottom-width: 5px;
-    border-bottom-color: ${theme.colors.main};
-  `};
+export const PickerInput = styled(Picker)`
+  color: ${({theme}) => theme.colors.text};
+  font-family: ${({ theme }) => theme.fonts.primary_400};
+  font-size: ${RFValue(12)}px;
+  flex: 1;
+  min-height: 40px;
+  padding: 0 10px;
+  z-index: 3;
 `;
 
 export const NameInput = styled.Text`
@@ -67,13 +60,4 @@ export const TextDescripiton = styled.Text`
   font-size: ${RFValue(12)}px;
   padding-left: 5px;
   width: 90%;
-`;
-
-export const Error = styled.Text`
-  color: ${({ theme }) => theme.colors.attention};
-
-  font-size: ${(RFValue(12))}px;
-  font-family: ${({ theme }) => theme.fonts.regular};
-  padding-left: 12px;
-  margin: 7px 0;
 `;
