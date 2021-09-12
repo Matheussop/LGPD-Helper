@@ -105,7 +105,6 @@ export function StepDetails() {
 
   return (
     <Container>
-      <KeyboardAvoidingView behavior="position" enabled>
         <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
           <View>
             <Description>
@@ -176,7 +175,6 @@ export function StepDetails() {
             </ListFiles>
           </View>
         </TouchableWithoutFeedback>
-      </KeyboardAvoidingView>
     </Container>
   );
 }

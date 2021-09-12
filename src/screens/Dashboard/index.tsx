@@ -10,11 +10,13 @@ import {
   Title,
   ConsultsList,
   LoadContainer,
+  SubTitleButton,
+  SubTitle
 } from "./styles";
 import { ActivityIndicator, StatusBar } from "react-native";
 import { useTheme } from "styled-components";
 import { useAuth } from "../../hooks/auth";
-import { Header } from "../../components/Header";
+import { useNavigation } from "@react-navigation/native";
 
 export interface DataListProps extends ConsultCardData {
   id: string;
@@ -32,11 +34,18 @@ interface HighlightData {
 
 export function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
+  const navigation = useNavigation();
+
+
   const [data, setData] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightData>(
     {} as HighlightData
   );
   const theme = useTheme(); 
+
+  function handleOpenCompany(item: DataListProps){
+    navigation.navigate('Home', { item })
+  }
 
   function getLastConsultsDate(collection: DataListProps[]) {
     if (collection.length === 0) {
@@ -158,6 +167,10 @@ export function Dashboard() {
     }, [])
   );
 
+  function handleNewCompany(){
+    navigation.navigate('RegisterCompany');
+  }
+
   return (
     <Container>
       {isLoading ? (
@@ -171,7 +184,6 @@ export function Dashboard() {
             backgroundColor="transparent"
             translucent
           />
-          <Header />
           <HighlightCards>
             <HighlightCard
               title="Ultima consultoria editada"
@@ -192,10 +204,13 @@ export function Dashboard() {
 
           <Editings>
             <Title>Listagem de consultorias</Title>
+            <SubTitleButton onPress={handleNewCompany}>
+              <SubTitle>Adicionar uma nova empresa</SubTitle>
+            </SubTitleButton>
             <ConsultsList
               data={data}
               keyExtractor={(item) => item.id}
-              renderItem={({ item }) => <ConsultCard data={item} />}
+              renderItem={({ item }) => <ConsultCard data={item} onPress={() => handleOpenCompany(item)} />}
             />
           </Editings>
         </>

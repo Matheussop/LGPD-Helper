@@ -2,19 +2,34 @@ import React from 'react';
 import { Feather } from "@expo/vector-icons";
 import { useTheme } from 'styled-components';
 import { Alert } from 'react-native';
+import { BackButton} from '../BackButton'
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 import {
    Container,
    TitleWreapper,
    ImageProfile,
    Title,
-   LogoutButton
+   LogoutButton,
+   NameCompany,
+   Wrapper
 } from './styles';
 import { useAuth } from '../../hooks/auth';
+import { DataListProps } from '../../screens/Dashboard';
+interface Props {
+  isBackButton?: boolean;
+}
 
-export function Header() {
+interface Params {
+  item: DataListProps;
+}
+
+export function Header(  {isBackButton=false} : Props) {
   const theme = useTheme();
   const {user, signOut} = useAuth();
+  const navigation = useNavigation();
+  const route = useRoute();
+  const param = route.params as Params  ;
 
   function handleSignOut(){
     Alert.alert('Tem certeza ?', 'Lembre-se, que se você sair, irá precisar de internet para conectar-se novamente.',[
@@ -29,12 +44,22 @@ export function Header() {
     ]);
   }
 
+  function handleBack() {
+    navigation.goBack();
+  }
+
+
   return (
     <Container>
       <TitleWreapper>
+        {user && user.user_type === 'consultor' && isBackButton && <BackButton onPress={handleBack}/>}
         {user.photo ?  <ImageProfile source={{uri : user.photo}}/> : null}
-        <Title>Olá {'\n'}{user.name}</Title>
+        <Wrapper>
+          <Title param={param}>Olá {user.name}</Title>
+          {param && param.item.name && <NameCompany>Empresa: {param.item.name}</NameCompany>}
+        </Wrapper>
       </TitleWreapper>
+      
       <LogoutButton onPress={handleSignOut}>
         <Feather name="power" size={24} color={theme.colors.shape}/>
       </LogoutButton>

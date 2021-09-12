@@ -9,6 +9,7 @@ import {
   Date,
   DescriptionBar
 } from "./styles";
+import { BorderlessButtonProps } from "react-native-gesture-handler";
 
 export interface ConsultCardData {
   name: string;
@@ -16,15 +17,15 @@ export interface ConsultCardData {
   progress: number;
 }
 
-interface IProps {
+interface IProps extends BorderlessButtonProps{
   data: ConsultCardData
 }
 
-export function ConsultCard({ data }: IProps) {
+export function ConsultCard({ data, ...rest} : IProps) {
   const theme = useTheme();
 
   return (
-    <Container>
+    <Container {...rest}>
       <Title>{data.name}</Title>
       <ProgressBar progress={data.progress/100} color={theme.colors.main} style={{
         height: 15, borderRadius: 10

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 
 import {
    Container,
@@ -9,7 +9,7 @@ import {
 import { Alert, StatusBar, View } from 'react-native';
 import { useTheme } from 'styled-components';
 import { AdequacyStep } from '../../components/AdequacyStep';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 export interface IStep{
   title: string;
@@ -28,6 +28,8 @@ const data: IStep[] = [
 
 export function Home() {
   const navigation = useNavigation();
+  const route = useRoute();
+  const item = route.params ;
 
   function handleOpenStep(step: IStep){
     navigation.navigate('Step', { step,  name: 'Custom profile header'});
