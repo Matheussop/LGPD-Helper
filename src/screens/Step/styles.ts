@@ -14,7 +14,7 @@ export const DescriptionStep = styled.View`
   border-radius: ${RFValue(10)}px;
 `;
 
-export const Footer = styled(BorderlessButton)``;
+export const FooterDescription = styled(BorderlessButton)``;
 
 export const WrapperFooter = styled.View`
   border-top-width: 1px;
@@ -59,3 +59,9 @@ export const FixedInputs = styled.View``;
 
 export const FilesInputs = styled.View``;
 
+export const Footer = styled.View`
+  width: 100%;
+  background-color: ${({ theme }) => theme.colors.background_primary};
+
+  padding: 24px 24px;
+`;

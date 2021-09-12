@@ -1,5 +1,9 @@
-import React from 'react';
+import "react-native-gesture-handler";
 
+import 'intl';
+import 'intl/locale-data/jsonp/pt-BR';
+
+import React from 'react';
 import theme from './src/styles/theme';
 import { ThemeProvider } from 'styled-components'
 

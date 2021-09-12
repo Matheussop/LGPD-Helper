@@ -12,6 +12,7 @@ interface IUser{
   email: string,
   consultantName?: string,
   photo?: string
+  user_type: string;
 }
 
 interface IAuthContextData{
@@ -47,11 +48,11 @@ function AuthProvider({ children }: AuthProviderProps){
       //   };
 
         const userLogged = {
-            id: String('1'),
-            email: String('')!,
-            name: String('Matheus')!,
-            photo: String(''),
-            user_type: String(userType)
+          id: String('1'),
+          email: String('')!,
+          name: String('Matheus')!,
+          photo: String(''),
+          user_type: String(userType)
         };
 
         setUser(userLogged)

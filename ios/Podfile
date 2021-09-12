@@ -18,4 +18,6 @@ target 'LGPDHelper' do
   #     flipper_post_install(installer)
   #   end
   # end
+  pod 'react-native-progress-bar-android', :path => '../node_modules/@react-native-community/progress-bar-android'
+
 end

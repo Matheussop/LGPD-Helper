@@ -18,6 +18,8 @@ export default {
     shape_dark: '#29292E',
 
     success: '#76EE59',
+    attention: '#E83F5B',
+    attention_light: 'rgba(234,63,91,0.5)',
   },
 
   fonts: {

@@ -17,6 +17,7 @@ export const TitleWreapper = styled.View`
   justify-content: center;
   align-items: center;
   flex:1;
+  margin-left: 10px;
 `;
 
 export const Title = styled.Text`

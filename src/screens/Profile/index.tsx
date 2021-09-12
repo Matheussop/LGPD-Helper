@@ -103,6 +103,7 @@ export function Profile() {
         email: user.email,
         name: name,
         consultantName: consultantName,
+        user_type: user.user_type,
         photo: avatar,
       });
 
@@ -173,7 +174,7 @@ export function Profile() {
                     textInput={"E-mail"}
                     editable={false}
                   />
-                  <Input
+                  { user.user_type === 'cliente' && <Input
                     iconName="user"
                     // defaultValue={user.email}
                     defaultValue={user.consultantName}
@@ -181,6 +182,7 @@ export function Profile() {
                     onChangeText={setConsultantName}
                     textInput={"Nome Consultor"}
                   />
+                  }
                   <WrapperButtons>
                     <Button
                       title="Salvar Alterações"

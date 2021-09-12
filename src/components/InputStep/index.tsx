@@ -5,7 +5,11 @@ import {
    Container,
    InputText,
    WrapperInput,
-   NameInput
+   NameInput,
+   DescriptionWrapper,
+   DescriptionButton,
+   TextDescripiton,
+   Error
 } from './styles';
 import { useTheme } from 'styled-components';
 import { TextInputProps } from 'react-native';
@@ -13,9 +17,12 @@ import { TextInputProps } from 'react-native';
 interface Props extends TextInputProps { 
   label: string;
   value?: string;
+  error?: string;
+  textDescripiton?: string;
+  more?: boolean;
 }
 
-export function InputStep({label, value, ...rest}: Props) {
+export function InputStep({label, value, textDescripiton, more=true, error, ...rest}: Props) {
   const theme = useTheme();
 
   const [isFilled,setIsFilled] = useState(false);
@@ -34,7 +41,7 @@ export function InputStep({label, value, ...rest}: Props) {
     <Container >
       { label && 
         <NameInput>
-         { label }
+         { label }:
         </NameInput>
       }
       <WrapperInput>
@@ -44,16 +51,16 @@ export function InputStep({label, value, ...rest}: Props) {
           isFocused={isFocused}
           {...rest}
         />
-          {/* <InputText
-            onFocus={handleInputFocused}
-            onBlur={handleInputBlur}
-            isFocused={isFocused}
-            label={label}
-            value={value} 
-            onChangeText={onChangeText}
-            {...rest}
-          /> */}
       </WrapperInput>
+      { textDescripiton && 
+        <DescriptionWrapper>
+          <TextDescripiton>{textDescripiton}</TextDescripiton>
+          { more && <DescriptionButton>
+            <Feather name="plus" size={24} color={theme.colors.text_light}/>
+          </DescriptionButton>}
+        </DescriptionWrapper>
+      }
+      { error && <Error>{error}</Error>}
     </Container>
   );
 }

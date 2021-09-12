@@ -5,6 +5,7 @@ import { Home } from '../screens/Home';
 import { Header } from '../components/Header';
 import { Step } from '../screens/Step';
 import { HeaderSteps } from '../components/HeaderSteps';
+import { StepDetails } from '../screens/StepDetails';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -20,6 +21,12 @@ const { Navigator, Screen } = createStackNavigator();
           header: props => <HeaderSteps/>,
         }}
       />
+      <Screen name="StepDetails" component={StepDetails} 
+        options={{
+          header: props => <HeaderSteps/>,
+        }}
+      />
+      
     </Navigator>
   );
 }
