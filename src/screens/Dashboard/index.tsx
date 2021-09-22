@@ -17,6 +17,7 @@ import { ActivityIndicator, StatusBar } from "react-native";
 import { useTheme } from "styled-components";
 import { useAuth } from "../../hooks/auth";
 import { useNavigation } from "@react-navigation/native";
+import api from "../../services/api";
 
 export interface DataListProps extends ConsultCardData {
   id: string;
@@ -55,11 +56,11 @@ export function Dashboard() {
     const lastEditings = new Date(
       Math.max.apply(
         Math,
-        collection.map((editings) => new Date(editings.date).getTime())
+        collection.map((editings) => new Date(editings.date_last_edit).getTime())
       )
     );
     const obj = collection.find((item) => {
-      if (new Date(item.date).toISOString() == lastEditings.toISOString())
+      if (new Date(item.date_last_edit).toISOString() == lastEditings.toISOString())
         return item;
     });
 
@@ -74,45 +75,25 @@ export function Dashboard() {
     };
   }
 
-  async function loadTransactions() {
-    const consults = [
-      {
-        id: "1",
-        name: "Nome empresa 1",
-        date: new Date().toString(),
-        progress: 20,
-      },
-      {
-        id: "2",
-        name: "Nome empresa 2 ",
-        date: new Date().toString(),
-        progress: 50,
-      },
-      {
-        id: "3",
-        name: "Nome empresa 3",
-        date: new Date().toString(),
-        progress: 70,
-      },
-      {
-        id: "4",
-        name: "Nome empresa 4",
-        date: new Date().toString(),
-        progress: 100,
-      },
-    ];
+  async function loadCompanys() {
+
+    const apiWithToken = await api();
+    const response = await apiWithToken.get('/company')
+    const consults = response && response.data as DataListProps[];
+
     const consultsFormatted: DataListProps[] = consults.map(
       (item: DataListProps) => {
-        const date = Intl.DateTimeFormat("pt-BR", {
+
+        const date_last_edit = Intl.DateTimeFormat("pt-BR", {
           day: "2-digit",
           month: "2-digit",
           year: "2-digit",
-        }).format(new Date(item.date));
+        }).format(new Date(item.date_last_edit));
 
         return {
           id: item.id,
           name: item.name,
-          date,
+          date_last_edit,
           progress: item.progress,
         };
       }
@@ -158,12 +139,12 @@ export function Dashboard() {
   }
 
   useEffect(() => {
-    loadTransactions();
+    loadCompanys();
   }, []);
 
   useFocusEffect(
     useCallback(() => {
-      loadTransactions();
+      loadCompanys();
     }, [])
   );
 
@@ -186,17 +167,17 @@ export function Dashboard() {
           />
           <HighlightCards>
             <HighlightCard
-              title="Ultima consultoria editada"
+              title="Ultimas consultorias editada"
               name={highlightData.first.name}
               lastConsults={highlightData.first.lastConsults}
             />
             <HighlightCard
-              title="Saídas"
-              name={highlightData.second.name}
+              title="Ultimas Consultorias editada"
+              name={highlightData.second.name} 
               lastConsults={highlightData.second.lastConsults}
             />
             <HighlightCard
-              title="Total"
+              title="Ultimas Consultorias editada"
               name={highlightData.third.name}
               lastConsults={highlightData.third.lastConsults}
             />

@@ -13,7 +13,7 @@ import { BorderlessButtonProps } from "react-native-gesture-handler";
 
 export interface ConsultCardData {
   name: string;
-  date: string;
+  date_last_edit: Date | string;
   progress: number;
 }
 
@@ -32,7 +32,7 @@ export function ConsultCard({ data, ...rest} : IProps) {
       }}/> 
       <Footer>
         <DescriptionBar>{data.progress}% concluída</DescriptionBar>
-        <Date>{data.date}</Date>
+        <Date>{data.date_last_edit}</Date>
       </Footer>
     </Container>
   );

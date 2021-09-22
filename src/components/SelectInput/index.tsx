@@ -49,7 +49,7 @@ export function SelectInput({
         >
           {options &&
             options.map((item) => (
-              <Picker.Item label={item.label} value={item.value} />
+              <Picker.Item key={item.value} label={item.label} value={item.value} />
             ))}
         </PickerInput>
       </WrapperInput>

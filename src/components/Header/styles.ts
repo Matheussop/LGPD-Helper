@@ -6,6 +6,11 @@ interface TitleProps{
   param: any;
 }
 
+interface UserProps{
+  exists: boolean;
+  existsPhoto?: boolean;
+}
+
 export const Container = styled.View`
   width: 100%;
   height: ${RFValue(110)}px;
@@ -14,12 +19,12 @@ export const Container = styled.View`
   align-items: center;
   background-color: ${({ theme }) => theme.colors.main};
 
-  padding: 20px 24px 0px;
+  padding: 20px 24px 0px 14px;
+  
 `;
 
 export const TitleWreapper = styled.View`
   flex-direction: row;
-  justify-content: center;
   align-items: center;
 `;
 export const ImageProfile = styled.Image`
@@ -34,6 +39,11 @@ export const Title = styled.Text<TitleProps>`
   color: ${({ theme }) => theme.colors.background_primary};
 `;
 
+export const UserWreapper = styled.View<UserProps>`
+  flex-direction: row;
+  align-items: center;
+`;
+
 export const NameCompany = styled.Text`
   margin-left: 18px;
   font-size: ${RFValue(12)}px;
@@ -43,4 +53,8 @@ export const NameCompany = styled.Text`
 
 export const LogoutButton = styled(BorderlessButton)``;
 
-export const Wrapper = styled.View``;
+export const Wrapper = styled.View<UserProps>`
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: ${({ exists, existsPhoto }) => existsPhoto ? 70 : exists ?  88 :  90}%;
+`;

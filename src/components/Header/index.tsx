@@ -12,7 +12,8 @@ import {
    Title,
    LogoutButton,
    NameCompany,
-   Wrapper
+   Wrapper,
+   UserWreapper
 } from './styles';
 import { useAuth } from '../../hooks/auth';
 import { DataListProps } from '../../screens/Dashboard';
@@ -51,10 +52,12 @@ export function Header(  {isBackButton=false} : Props) {
 
   return (
     <Container>
-      <TitleWreapper>
+      <TitleWreapper >
+        <UserWreapper exists={!!user.photo && user && user.user_type === 'consultor' && isBackButton }>
         {user && user.user_type === 'consultor' && isBackButton && <BackButton onPress={handleBack}/>}
         {user.photo ?  <ImageProfile source={{uri : user.photo}}/> : null}
-        <Wrapper>
+        </UserWreapper>
+        <Wrapper exists={user && user.user_type === 'consultor' && isBackButton } existsPhoto={!!user.photo}>
           <Title param={param}>Olá {user.name}</Title>
           {param && param.item.name && <NameCompany>Empresa: {param.item.name}</NameCompany>}
         </Wrapper>

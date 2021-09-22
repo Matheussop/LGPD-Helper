@@ -35,6 +35,7 @@ export const DataText = styled.Text`
   font-family: ${({ theme }) => theme.fonts.regular};
   font-size: ${RFValue(15)}px;
   padding: 15px 0;
+  margin-left: 10px;
 `;
 
 export const NameInput = styled.Text`

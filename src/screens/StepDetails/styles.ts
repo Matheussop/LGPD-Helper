@@ -18,7 +18,9 @@ export const Description = styled.Text`
 
 export const ListInputs = styled.View``;
 
-export const ListFiles = styled.View``;
+export const ListFiles = styled.View`
+  margin-bottom: 10px;
+`;
 
 export const TitleFiles = styled.Text`
   margin: 5px 0;

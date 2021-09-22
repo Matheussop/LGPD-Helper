@@ -10,6 +10,8 @@ import { Alert, StatusBar, View } from 'react-native';
 import { useTheme } from 'styled-components';
 import { AdequacyStep } from '../../components/AdequacyStep';
 import { useNavigation, useRoute } from "@react-navigation/native";
+import { useAuth } from '../../hooks/auth';
+import api from "../../services/api";
 
 export interface IStep{
   title: string;
@@ -30,6 +32,26 @@ export function Home() {
   const navigation = useNavigation();
   const route = useRoute();
   const item = route.params ;
+
+  useEffect(() => {
+    if(!item){
+      async function getCompany(){
+        const apiWithToken = await api();
+        const response = await apiWithToken.get('/company/user')
+        .then((response) => {
+          if(!response.data){
+            navigation.navigate('RegisterCompany');
+          }
+        })
+        .catch((error) => {
+          if (error.response) { // get response with a status code not in range 2xx
+            Alert.alert((error.response.status + ''),error.response.data.message);
+          }
+        });
+      }
+      getCompany();
+    }
+  }, [])
 
   function handleOpenStep(step: IStep){
     navigation.navigate('Step', { step,  name: 'Custom profile header'});

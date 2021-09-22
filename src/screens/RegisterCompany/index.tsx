@@ -12,6 +12,7 @@ import { Container, Form } from "./styles";
 import { InputForm } from "../../components/InputForm";
 import { DatePickerForm } from "../../components/DatePickerForm";
 import { InputMaskedForm } from "../../components/InputMaskedForm";
+import api from "../../services/api";
 
 
 interface FormData {
@@ -20,6 +21,11 @@ interface FormData {
   dateInitConsult: string;
   address: string;
   category: string;
+}
+
+interface IError{
+  statusCode: string;
+  message: string;
 }
 
 export function RegisterCompany() {
@@ -50,19 +56,25 @@ export function RegisterCompany() {
   });
 
   async function handleRegister(form: FormData) {
+    let datePieces = form.dateInitConsult.split("/");
+    const date = new Date(parseInt(datePieces[2]), (parseInt(datePieces[1]) - 1), parseInt(datePieces[0]));
     const newCompany = {
-      companyName: form.companyName,
+      name: form.companyName,
       cnpj: form.cnpj,
-      dateInitConsult: form.dateInitConsult,
+      date_init_consult: date,
       address: form.address,
       category: form.category,
     };
-
-    try {
-      console.log(newCompany);
-    } catch (error) {
-      Alert.alert("Não foi possível salvar as informações");
-    }
+    const apiWithToken = await api();
+    const response = await apiWithToken.post('/company', newCompany)
+    .then((response) => {
+      Alert.alert('Criado com sucesso', `A empresa ${response.data.name} foi criada`);
+    })
+    .catch((error) => {
+      if (error.response) { // get response with a status code not in range 2xx
+        Alert.alert((error.response.status + ''),error.response.data.message);
+      }
+    });
   }
 
   return (

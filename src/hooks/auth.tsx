@@ -1,13 +1,16 @@
 import React, { createContext, ReactNode, useContext, useState, useEffect } from 'react';
 
 import * as Google from 'expo-google-app-auth';
+import api from '../services/apiWithoutToken';
+import { Alert } from 'react-native';
+import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 interface AuthProviderProps{
   children: ReactNode
 }
 
 interface IUser{
-  id: string,
   name: string,
   email: string,
   consultantName?: string,
@@ -29,7 +32,7 @@ function AuthProvider({ children }: AuthProviderProps){
   const [user, setUser] = useState<IUser>({} as IUser);
   const [userStorageLoading, setUserStorageLoading] = useState(true)
 
-  const userStorageKey = '@gofinances:user'
+  const userStorageKey = '@LGPD-Helper:user'
 
   async function signInWithGoogle(userType: 'consultor' | 'cliente' | 'autoavaliação'){
     try{
@@ -38,7 +41,7 @@ function AuthProvider({ children }: AuthProviderProps){
       //   androidClientId: '541272048092-psqjkvf8e6eo8annebs9khqgvmde3jpe.apps.googleusercontent.com',
       //   scopes: ['profile','email']
       // })
-
+      
       // if(result.type === 'success'){
       //   const userLogged = {
       //     id: String(result.user.id),
@@ -47,17 +50,33 @@ function AuthProvider({ children }: AuthProviderProps){
       //     photo: String(result.user.photoUrl!)
       //   };
 
+      const email = 'mlnoob98@gmail.com'
+      const name = 'Matheus'
+      const user = { 
+        email,
+        name,
+        user_type: String(userType)
+      }
+      const response = await api.post('/sessions', user).catch((error) => {
+        if (error.response) { 
+          Alert.alert((error.response.status + ''),error.response.data.message);
+        }
+      });
+      if(response && response.data){
         const userLogged = {
-          id: String('1'),
-          email: String('')!,
-          name: String('Matheus')!,
-          photo: String(''),
+          email,
+          name,
+          token: response.data.token,
+          // photo: String(result.user.photoUrl!)
           user_type: String(userType)
         };
-
         setUser(userLogged)
-        // await AsyncStorage.setItem(userStorageKey, JSON.stringify(userLogged))
-      // }
+        try{
+          await AsyncStorage.setItem(userStorageKey, response.data.token)
+        }catch(error: any){
+          throw new Error(error)
+        }
+      }
 
     }catch(error: any){
       throw new Error(error)

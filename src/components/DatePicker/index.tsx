@@ -19,6 +19,7 @@ interface Props  {
   iconName: React.ComponentProps<typeof Feather>['name'];
   value?: string;
   textInput?: string;
+  currentDate?: string;
   onChangeDate: (date: string) => void;
 }
 

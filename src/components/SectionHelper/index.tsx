@@ -20,6 +20,7 @@ interface Props {
     text: string;
     id: string;
     moreInfo: boolean;
+    simpleText: string;
   }
 }
 

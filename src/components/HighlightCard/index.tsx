@@ -23,9 +23,9 @@ export function HighlightCard({
   return (
     <Container>
       <Header>
-        <Title>{title}</Title>
+        <Title >{title}</Title>
       </Header>
-        <NameCompany>{name}</NameCompany>
+        <NameCompany  numberOfLines={2} >{name}</NameCompany>
       <Footer>
         <LastEditing>{lastConsults}</LastEditing>
       </Footer>

@@ -10,6 +10,7 @@ export const Container = styled.View`
 
   padding: 19px 23px;
   margin-right: 16px;
+
 `;
 
 export const Header = styled.View`
@@ -27,7 +28,7 @@ export const NameCompany = styled.Text`
   font-family: ${({ theme }) => theme.fonts.medium};
   font-size: ${RFValue(16)}px;
   color: ${({ theme }) => theme.colors.main_dark};
-  padding: 10px 0px;
+  padding: 5px 0px;
 `;
 
 export const Footer = styled.View``;

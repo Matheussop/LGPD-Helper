@@ -3,6 +3,7 @@ import { InputStep } from "../../components/InputStep";
 import * as DocumentPicker from 'expo-document-picker';
 import { Feather } from "@expo/vector-icons";
 import { IPickerOptions } from '../../components/SelectInput';
+import { Button } from '../../components/Button'
 
 import { Container, 
   Description, 
@@ -26,6 +27,7 @@ import {
 } from "react-native";
 import theme from "../../styles/theme";
 import { SelectInput } from "../../components/SelectInput";
+import api from "../../services/api";
 
 const data = [
   {
@@ -82,12 +84,16 @@ export function StepDetails() {
         if(resp.type === 'success'){
           // const fileName = resp.uri.replace('file://',"");
           console.log(resp)
-          setListFiles([...listFiles, resp]);
+          // setListFiles([...listFiles, resp]);
           // const uri = resp.uri
           // let type = resp.uri.substring(resp.uri.lastIndexOf(".") + 1);
           // const form = await new FormData()
           // await form.append('file', { uri, name: 'media', type: `"application/${type}` } as any)
           // console.log(form)
+          // let headers = {
+          //   "Content-Type": "multipart/form-data" 
+          // }
+          // await api.post('/categories/import', form, {"headers" : headers}).catch(console.log);
         }
       });
     }catch(error: any){
@@ -112,6 +118,10 @@ export function StepDetails() {
     }catch(error: any){
       console.log('ERR: ' + error.message);
     }
+  }
+
+  async function handleSaveInfo(){
+
   }
 
   return (
@@ -188,6 +198,7 @@ export function StepDetails() {
                 <SubTitles>Escolher nova Imagem</SubTitles>
               </OpenFiles>
             </ListFiles>
+            <Button title="Salvar" onPress={handleSaveInfo}/>
           </View>
         </TouchableWithoutFeedback>
     </Container>
