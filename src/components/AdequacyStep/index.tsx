@@ -16,8 +16,9 @@ import { useTheme } from 'styled-components';
 interface Props extends RectButtonProps{
   data: {
     title: string;
-    statusText: string;
+    type_step: string;
     progress?: number;
+    progress_adequacy?: number;
   },
   last?: boolean;
 }
@@ -44,7 +45,7 @@ export function AdequacyStep({data, last=false, ...rest}: Props) {
       </StatusProgress>
       <Content>
         <Title>{data.title}</Title>
-        <StatusText>{data.statusText}</StatusText>
+        {/* <StatusText>{data.statusText}</StatusText> */}
       </Content>
     </Container>
   );

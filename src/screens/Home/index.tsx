@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 
 import {
    Container,
@@ -6,41 +6,51 @@ import {
    TextInfo,
    ListSteps,
 } from './styles';
-import { Alert, StatusBar, View } from 'react-native';
+import { ActivityIndicator, Alert, StatusBar, View } from 'react-native';
 import { useTheme } from 'styled-components';
 import { AdequacyStep } from '../../components/AdequacyStep';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { useAuth } from '../../hooks/auth';
 import api from "../../services/api";
+import { LoadContainer } from '../Dashboard/styles';
+
 
 export interface IStep{
   title: string;
-  statusText: string;
+  type_step: string;
   progress?: number;
+  progress_adequacy?: number;
 }
 
 const data: IStep[] = [
-  {title: 'Adequação Manual de Regras',statusText: '100% preenchido', progress: 100},
-  {title: 'Política de dados',statusText: '80% preenchido', progress: 80},
-  {title: 'Currículo',statusText: '60% preenchido', progress: 50},
-  {title: 'Termo de desligamento',statusText: '35% preenchido', progress: 30},
-  {title: 'Imagens',statusText: '10% preenchido', progress: 10},
-  {title: 'Biometria',statusText: '0% preenchido', progress: 0},
+  {title: 'Adequação Manual de Regras',type_step: '1', progress: 0},
+  {title: 'Política de dados',type_step: '2', progress: 0},
+  {title: 'Currículo',type_step: '3', progress: 0},
+  {title: 'Termo de desligamento',type_step: '4', progress: 0},
+  {title: 'Imagens',type_step: '5', progress: 0},
+  {title: 'Biometria',type_step: '6', progress: 0},
 ]
 
 export function Home() {
   const navigation = useNavigation();
   const route = useRoute();
-  const item = route.params ;
+  const item = route.params;
+  const theme = useTheme();
+  const [hasCompany, setHasCompany] = useState(false);
+  const [hasSteps, setHasSteps] = useState(false);
+  const [steps, setSteps] = useState<IStep[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     if(!item){
       async function getCompany(){
         const apiWithToken = await api();
-        const response = await apiWithToken.get('/company/user')
+        await apiWithToken.get('/company/user')
         .then((response) => {
           if(!response.data){
             navigation.navigate('RegisterCompany');
+          }else{
+            setHasCompany(true);
           }
         })
         .catch((error) => {
@@ -53,6 +63,42 @@ export function Home() {
     }
   }, [])
 
+
+  useEffect(() => {
+    if(hasCompany){
+      async function confirmCreateStep(){
+        const apiWithToken = await api();
+        await apiWithToken.get('/step')
+        .then(response =>{
+          if(response.data.length === 0){
+            data.map(async (item) => {
+              await apiWithToken.post('/step',item)
+              .catch((error) => {
+                if (error.response) { // get response with a status code not in range 2xx
+                  Alert.alert((error.response.status + ''),error.response.data.message);
+                }else {
+                  Alert.alert("Error", "Error durante a criação das etapas");
+                }
+              });
+            })
+            Alert.alert("Sucesso", "Etapas criadas com sucesso");
+            setHasSteps(true);
+          }else{
+            setSteps(response.data);
+            console.log(response.data)
+            setIsLoading(false);
+          }
+        })
+        .catch((error) => {
+          if (error.response) { // get response with a status code not in range 2xx
+            Alert.alert((error.response.status + ''),error.response.data.message);
+          }
+        });
+      }
+      confirmCreateStep();
+    }
+  }, [hasCompany,hasSteps])
+
   function handleOpenStep(step: IStep){
     navigation.navigate('Step', { step,  name: 'Custom profile header'});
   }
@@ -63,6 +109,11 @@ export function Home() {
        backgroundColor="transparent"
        translucent
       />
+       {isLoading ? (
+        <LoadContainer>
+          <ActivityIndicator size="large" color={theme.colors.main} />
+        </LoadContainer>
+      ) : (
       <Content>
         <TextInfo>
           Para ver mais detalhes sobre uma adequação basta
@@ -71,7 +122,7 @@ export function Home() {
           circulo índica a porcentagem de adequação 
         </TextInfo>
         <ListSteps
-        data={data}
+        data={steps}
         keyExtractor={(key) => key.title}
         renderItem={({ item , index}) => 
           <View> 
@@ -86,6 +137,7 @@ export function Home() {
         // onViewableItemsChanged={indexChanged.current}
       />
       </Content>
+      )}
     </Container>
   );
 }
