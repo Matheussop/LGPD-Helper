@@ -28,6 +28,7 @@ import {
 import theme from "../../styles/theme";
 import { SelectInput } from "../../components/SelectInput";
 import api from "../../services/api";
+import { useRoute } from "@react-navigation/native";
 
 const data = [
   {
@@ -67,16 +68,32 @@ interface IFile {
   isUploaded?: boolean;
 }
 
+interface Params{ 
+  inputs: any;
+  id: string;
+}
 export function StepDetails() {
   const [value, setValue] = useState([""]);
   const [listFiles, setListFiles] = useState<IFile[]>([] as IFile[]);
   const [listImages, setListImages] = useState<IFile[]>([] as IFile[]);
   const [selectValue, setSelectValue] = useState('');
+  const [values, setValues] = useState<string[]>([] as string[]);
+  const route = useRoute();
+  const { inputs, id } = route.params as Params;
 
   function changeValue(index: number, newvalue: string) {
     value[index] = newvalue;
     setValue(value);
   }
+
+  useEffect(() => {
+    let inputsValues: string[] = [];
+    inputs.map((item: any, index: number) => {
+      inputsValues[index] = item[Object.keys(item)[0]];
+    })
+
+    setValues(inputsValues);
+  }, [])
 
   async function handleOpenFile(){
     try{
@@ -120,8 +137,29 @@ export function StepDetails() {
     }
   }
 
-  async function handleSaveInfo(){
+  function onChangeValue(value: string, index: number){
+    values[index] = value;
+  }
 
+  async function handleSaveInfo(){
+    inputs.map((item: any, index: number) => {
+      item[Object.keys(item)[0]] = values[index];
+    })
+    const data = {
+      id,
+      inputs
+    }
+    const apiWithToken = await api();
+    await apiWithToken.post(`/stepDetails/update`, data)
+    .then(response => {
+      if(response)
+      Alert.alert('Sucesso', 'Dados salvos com sucesso');
+    })
+    .catch((error) => {
+      if (error.response) { // get response with a status code not in range 2xx
+        Alert.alert((error.response.status + ''), error.response.data.message);
+      }
+    });
   }
 
   return (
@@ -133,23 +171,25 @@ export function StepDetails() {
               referente a lei
             </Description>
             <ListInputs>
-              <InputStep
-                label={data[0].label}
-                textDescripiton={data[0].textDescripiton}
-              />
-              <InputStep
-                label={data[1].label}
-                textDescripiton={data[1].textDescripiton}
-              />
+              {inputs.map((item: any, index: number) => {
+                if(item.type === 'string'){
+                  return (
+                    <InputStep
+                    key={Object.getOwnPropertyNames(item)[0]}
+                    label={Object.getOwnPropertyNames(item)[0]}
+                    defaultValue={item[Object.keys(item)[0]]}
+                    onChangeText={(item) => onChangeValue(item, index)}
+                    textDescripiton={item.description && item.description}
+                    />
+                  )
+                }
+              })}
+           
                <SelectInput  
                 value={selectValue}
                 onValueChange={setSelectValue}
                 label={data[3].label} textDescripiton={data[3].textDescripiton} options={data[3].options}/>
-              <InputStep
-                label={data[1].label}
-                textDescripiton={data[1].textDescripiton}
-              />
-             
+
               <InputStep
                 label={data[2].label}
                 textDescripiton={data[2].textDescripiton}

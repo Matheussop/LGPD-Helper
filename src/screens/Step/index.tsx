@@ -1,86 +1,148 @@
-import React, {useState} from 'react';
+import React, { useState, useEffect } from 'react';
 import { Feather } from "@expo/vector-icons";
 
 import {
-   Container,
-   DescriptionStep,
-   Title,
-   SubTitle,
-   TextDescription,
-   InputsSteps,
-   FixedInputs,
-   FilesInputs,
-   FooterDescription,
-   Footer,
-   WrapperFooter,
-   Info,
+  Container,
+  DescriptionStep,
+  Title,
+  SubTitle,
+  TextDescription,
+  InputsSteps,
+  FixedInputs,
+  FilesInputs,
+  FooterDescription,
+  Footer,
+  WrapperFooter,
+  Info,
 } from './styles';
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useTheme } from 'styled-components';
 import { InputStep } from '../../components/InputStep';
 import { ShowInputStep } from '../../components/ShowInputStep';
 import { Button } from '../../components/Button';
+import api from "../../services/api";
+import { ActivityIndicator, Alert, View } from 'react-native';
+import { LoadContainer } from '../Dashboard/styles';
+import { getInputs } from '../../utils/GetInputs';
 
-export interface IStep{
+export interface IStep {
+  id?: string;
   title: string;
-  statusText: string;
-  progress?: number;
+  type_step: string;
+  progress: string;
+  progress_adequacy: string;
 }
 
-export interface Params{
+export interface Params {
   step: IStep;
+}
+
+export interface IStepParams {
+  id?: string;
+  inputs: any;
+  type_step: string;
+  id_step?: string;
+  id_info: string;
+  info?: {
+    id?: string;
+    moreInfo: boolean;
+    simpleText: string;
+    text: string;
+    title: string;
+  }
 }
 
 export function Step() {
   const route = useRoute();
-  const {step} = route.params as Params;
+  const { step } = route.params as Params;
   const theme = useTheme();
   const navigation = useNavigation();
+  const [isLoading, setIsLoading] = useState(true);
 
-  const [value,setValue] = useState('');
+  const [stepDetail, setStepDetail] = useState<IStepParams>({} as IStepParams);
+  const [value, setValue] = useState('');
+  const screenIsFocus = useIsFocused();
 
-  function openDetailsStep(){
-    navigation.navigate('StepDetails', { step, });
+  function openDetailsStep() {
+    navigation.navigate('StepDetails', { step, inputs: stepDetail.inputs, id: stepDetail.id });
   }
+
+  useEffect(() => {
+    async function confirmCreateStepDetails() {
+      const apiWithToken = await api();
+      await apiWithToken.get(`/stepDetails/${step.id}`)
+        .then(async (response) => {
+          if (!response.data) {
+            const data = {
+              id_step: step.id,
+              type_step: step.type_step,
+              inputs: getInputs(step.type_step)
+            }
+
+            await apiWithToken.post(`/stepDetails`, data)
+              .then(async (response) => {
+                if (response.data) {
+                  confirmCreateStepDetails();
+                }
+              })
+              .catch((error) => {
+                if (error.response) { // get response with a status code not in range 2xx
+                  Alert.alert((error.response.status + ''), error.response.data.message);
+                }
+              });
+          } else {
+            setStepDetail(response.data);
+            setIsLoading(false);
+          }
+        })
+        .catch((error) => {
+          if (error.response) { // get response with a status code not in range 2xx
+            Alert.alert((error.response.status + ''), error.response.data.message);
+          }
+        });
+    }
+    if(screenIsFocus)
+    confirmCreateStepDetails();
+  }, [screenIsFocus]);
 
   return (
     <Container>
-      <DescriptionStep>
-        <Title>Descrição do Passo</Title>
-        <TextDescription>
-          Essa etapa da adeguação te como objetivo auxiliar
-          a empresa com a criação ou edição de um 
-          manual de regras...
-        </TextDescription>
-        <FooterDescription onPress={() => {console.log('teste')}} >
-          <WrapperFooter>
-            <Info>Caso queira ver mais detalhes clique aqui</Info>
-            <Feather name="plus" size={24} color={theme.colors.text}/>
-          </WrapperFooter>
-        </FooterDescription>
-      </DescriptionStep>
-      <InputsSteps>
-        <Title>Informações do manual</Title>
-        <SubTitle>Informações requisitadas:</SubTitle>
-        <FixedInputs>
-          <ShowInputStep label={'Informação 1'} value={'Lorem Ipsulum'}/>
-          <ShowInputStep label={'Informação 2'} value={'Lorem Ipsulum'}/>
-          <ShowInputStep label={'Informação 3'} value={'Lorem Ipsulum'}/>
-          <ShowInputStep label={'Informação 4'} value={'Lorem Ipsulum'}/>
-          <ShowInputStep label={'Informação 5'} value={'Lorem Ipsulum'}/>
-          <ShowInputStep label={'Informação 6'} value={'Lorem Ipsulum'}/>
-          <ShowInputStep label={'Informação 7'} value={'Lorem Ipsulum'}/>
-          <ShowInputStep label={'Informação 8'} value={'Lorem Ipsulum'}/>
-          <ShowInputStep label={'Informação 9'} value={'Lorem Ipsulum'}/>
-        </FixedInputs>
-        <SubTitle>Arquivos relacionados ao manual: </SubTitle>
-        <FilesInputs>
+      {isLoading ? (
+        <LoadContainer>
+          <ActivityIndicator size="large" color={theme.colors.main} />
+        </LoadContainer>
+      ) : (
+        <>
+          <DescriptionStep>
+            <Title>{stepDetail.info && stepDetail.info.title}</Title>
+            <TextDescription>
+              {stepDetail.info && stepDetail.info.simpleText}
+            </TextDescription>
+            <FooterDescription onPress={() => { console.log(stepDetail.info && stepDetail.info.id) }} >
+              <WrapperFooter>
+                <Info>Caso queira ver mais detalhes clique aqui</Info>
+                <Feather name="plus" size={24} color={theme.colors.text} />
+              </WrapperFooter>
+            </FooterDescription>
+          </DescriptionStep>
+          <InputsSteps>
+            <Title>Informações do manual</Title>
+            <SubTitle>Informações requisitadas:</SubTitle>
+            <FixedInputs>
+              {stepDetail.inputs.map((item: any) => (
+                <ShowInputStep key={Object.getOwnPropertyNames(item)[0]} label={Object.getOwnPropertyNames(item)[0]} value={item[Object.keys(item)[0]]}/>
+              ))}
+            </FixedInputs>
+            <SubTitle>Arquivos relacionados ao manual: </SubTitle>
+            <FilesInputs>
 
-        </FilesInputs>
-      </InputsSteps>
-      <Footer>
-        <Button title={`Detalhe dos dados`} onPress={openDetailsStep} />
-      </Footer>
+            </FilesInputs>
+          </InputsSteps>
+          <Footer>
+            <Button title={`Detalhe dos dados`} onPress={openDetailsStep} />
+          </Footer>
+        </>
+      )}
     </Container>
   );
 }

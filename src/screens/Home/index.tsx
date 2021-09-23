@@ -16,19 +16,20 @@ import { LoadContainer } from '../Dashboard/styles';
 
 
 export interface IStep{
+  id?: string;
   title: string;
   type_step: string;
-  progress?: number;
-  progress_adequacy?: number;
+  progress: string;
+  progress_adequacy: string;
 }
 
 const data: IStep[] = [
-  {title: 'Adequação Manual de Regras',type_step: '1', progress: 0},
-  {title: 'Política de dados',type_step: '2', progress: 0},
-  {title: 'Currículo',type_step: '3', progress: 0},
-  {title: 'Termo de desligamento',type_step: '4', progress: 0},
-  {title: 'Imagens',type_step: '5', progress: 0},
-  {title: 'Biometria',type_step: '6', progress: 0},
+  {title: 'Adequação Manual de Regras',type_step: '1', progress: '0', progress_adequacy: '0'},
+  {title: 'Política de dados',type_step: '2', progress: '0', progress_adequacy: '0'},
+  {title: 'Currículo',type_step: '3', progress: '0', progress_adequacy: '0'},
+  {title: 'Termo de desligamento',type_step: '4', progress: '0', progress_adequacy: '0'},
+  {title: 'Imagens',type_step: '5', progress: '0', progress_adequacy: '0'},
+  {title: 'Biometria',type_step: '6', progress: '0', progress_adequacy: '0'},
 ]
 
 export function Home() {
@@ -60,6 +61,8 @@ export function Home() {
         });
       }
       getCompany();
+    }else{
+      setHasCompany(true);
     }
   }, [])
 
@@ -71,8 +74,18 @@ export function Home() {
         await apiWithToken.get('/step')
         .then(response =>{
           if(response.data.length === 0){
+            let flag = 0;
             data.map(async (item) => {
               await apiWithToken.post('/step',item)
+              .then((response) => {
+                if(response.data){
+                  flag++;
+                  if(flag === 6){
+                    Alert.alert("Sucesso", "Etapas criadas com sucesso");
+                    setHasSteps(true);
+                  }
+                }
+              })
               .catch((error) => {
                 if (error.response) { // get response with a status code not in range 2xx
                   Alert.alert((error.response.status + ''),error.response.data.message);
@@ -81,11 +94,9 @@ export function Home() {
                 }
               });
             })
-            Alert.alert("Sucesso", "Etapas criadas com sucesso");
-            setHasSteps(true);
+           
           }else{
             setSteps(response.data);
-            console.log(response.data)
             setIsLoading(false);
           }
         })

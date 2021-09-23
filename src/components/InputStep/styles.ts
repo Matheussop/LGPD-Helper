@@ -23,12 +23,12 @@ export const InputText = styled(TextInput)<ContainerProps>`
   max-height: 200px;
   color: ${({theme}) => theme.colors.text};
   font-family: ${({ theme }) => theme.fonts.primary_400};
-  font-size: ${RFValue(12)}px;
+  font-size: ${RFValue(14)}px;
   
   border-radius: ${RFValue(10)}px;
   border-width: 2px;
   border-color: ${({ theme }) => theme.colors.main_dark};
-  padding: 0 10px;
+  padding: 0 20px;
   z-index: 2;
 
   ${({ theme, isFocused }) => isFocused && css`
