@@ -61,6 +61,9 @@ function AuthProvider({ children }: AuthProviderProps){
         if (error.response) { 
           Alert.alert((error.response.status + ''),error.response.data.message);
         }
+        if(error){
+          Alert.alert('Error', 'Error ao tentar conexão com servidor');
+        }
       });
       if(response && response.data){
         const userLogged = {

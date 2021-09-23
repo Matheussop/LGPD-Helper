@@ -25,6 +25,7 @@ export const Container = styled.View`
 `;
 
 export const ValueInput = styled.Text`
+  max-width: 60%;
   color: ${({theme}) => theme.colors.text};
   font-family: ${({ theme }) => theme.fonts.medium};
   font-size: ${RFValue(12)}px;
@@ -34,5 +35,6 @@ export const NameInput = styled.Text`
   color: ${({theme}) => theme.colors.text_light};
   font-family: ${({ theme }) => theme.fonts.medium};
   font-size: ${RFValue(12)}px;
+  margin-top: 2px;
   padding-left: 5px;
 `;

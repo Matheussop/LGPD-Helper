@@ -17,6 +17,7 @@ export const WrapperInput = styled.View`
   background-color: ${({ theme }) => theme.colors.background_secundary};
   flex: 1;
   min-height: 40px;
+  padding: 0 10px;
   z-index: 2;
 `;
 

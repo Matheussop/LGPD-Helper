@@ -142,6 +142,7 @@ export function StepDetails() {
   }
 
   async function handleSaveInfo(){
+    console.log(values);
     inputs.map((item: any, index: number) => {
       item[Object.keys(item)[0]] = values[index];
     })
@@ -182,20 +183,29 @@ export function StepDetails() {
                     textDescripiton={item.description && item.description}
                     />
                   )
+                }else if(item.type === 'textarea'){
+                  return ( <InputStep
+                    key={Object.getOwnPropertyNames(item)[0]}
+                    label={Object.getOwnPropertyNames(item)[0]}
+                    defaultValue={item[Object.keys(item)[0]]}
+                    onChangeText={(item) => onChangeValue(item, index)}
+                    textDescripiton={item.description && item.description}
+                    multiline={true}
+                    more={false}
+                  />
+                  )
+                } else if(item.type === 'select'){
+                  return (
+                    <SelectInput  
+                    key={Object.getOwnPropertyNames(item)[0]}
+                    defaultValue={item[Object.keys(item)[0]]}
+                    onValueChange={(item) => onChangeValue(item, index)}
+                    label={Object.getOwnPropertyNames(item)[0]} textDescripiton={item.description && item.description} options={item.options && item.options}/>
+                  )
                 }
               })}
            
-               <SelectInput  
-                value={selectValue}
-                onValueChange={setSelectValue}
-                label={data[3].label} textDescripiton={data[3].textDescripiton} options={data[3].options}/>
-
-              <InputStep
-                label={data[2].label}
-                textDescripiton={data[2].textDescripiton}
-                multiline={true}
-                more={false}
-              />
+              
               {/* {data.map((item, index) => 
           <InputStep key={item.id} label={item.label} textDescripiton={item.textDescripiton} value={value[index]} onChangeText={(value) => changeValue(index, value)}/>
         )} */}

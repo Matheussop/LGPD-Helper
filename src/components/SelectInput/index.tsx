@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Feather } from "@expo/vector-icons";
 
 import {
@@ -20,31 +20,34 @@ export interface IPickerOptions {
 }
 
 interface Props extends PickerProps {
-  value: string;
+  value?: string;
   options: IPickerOptions[] | undefined;
   label?: string;
   textDescripiton?: string;
   more?: boolean;
+  defaultValue?: string;
   onValueChange: (value: any) => void;
 }
 
 export function SelectInput({
-  value,
   options,
   label,
   textDescripiton,
   more,
+  defaultValue,
   onValueChange,
   ...rest
 }: Props) {
   const theme = useTheme();
+  const [value,setValue] = useState(defaultValue);
+
   return (
     <Container>
       {label && <NameInput>{label}</NameInput>}
       <WrapperInput>
         <PickerInput
           selectedValue={value}
-          onValueChange={onValueChange}
+          onValueChange={(item) => {onValueChange(item), setValue(item + '')}}
           {...rest}
         >
           {options &&

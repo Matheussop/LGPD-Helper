@@ -15,24 +15,11 @@ interface Props extends TextInputProps {
 }
 
 export function ShowInputStep({label, value, ...rest}: Props) {
-  const theme = useTheme();
-
-  const [isFilled,setIsFilled] = useState(false);
-  const [isFocused,setIsFocused] = useState(false);
-
-  function handleInputFocused(){
-    setIsFocused(true);
-  }
-
-  function handleInputBlur(){
-    setIsFocused(false);
-    setIsFilled(!!value);
-  }
 
   return (
     <Container >
       <NameInput>{ label }:</NameInput>
-      <ValueInput>{ value }</ValueInput>
+      <ValueInput numberOfLines={1}>{ value }</ValueInput>
     </Container>
   );
 }
