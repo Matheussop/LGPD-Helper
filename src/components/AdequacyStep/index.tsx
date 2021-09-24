@@ -32,7 +32,7 @@ export function AdequacyStep({data, last=false, ...rest}: Props) {
       <StatusProgress>
         {/* <StatusCircle/> */}
         <CircularProgress
-          value={parseInt(data.progress)}
+          value={parseInt(data.progress_adequacy)}
           radius={40}
           duration={1000}
           valueSuffix={'%'}
@@ -45,7 +45,7 @@ export function AdequacyStep({data, last=false, ...rest}: Props) {
       </StatusProgress>
       <Content>
         <Title>{data.title}</Title>
-        <StatusText>{data.progress_adequacy}% de preenchimento</StatusText>
+        <StatusText>{data.progress}% de preenchimento</StatusText>
       </Content>
     </Container>
   );

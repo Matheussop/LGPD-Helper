@@ -80,7 +80,6 @@ export function Dashboard() {
     const apiWithToken = await api();
     const response = await apiWithToken.get('/company')
     const consults = response && response.data as DataListProps[];
-
     const consultsFormatted: DataListProps[] = consults.map(
       (item: DataListProps) => {
 

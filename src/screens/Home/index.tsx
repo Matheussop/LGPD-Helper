@@ -9,10 +9,11 @@ import {
 import { ActivityIndicator, Alert, StatusBar, View } from 'react-native';
 import { useTheme } from 'styled-components';
 import { AdequacyStep } from '../../components/AdequacyStep';
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation, useRoute, useIsFocused } from "@react-navigation/native";
 import { useAuth } from '../../hooks/auth';
 import api from "../../services/api";
 import { LoadContainer } from '../Dashboard/styles';
+import { DataListProps } from '../Dashboard';
 
 
 export interface IStep{
@@ -32,18 +33,24 @@ const data: IStep[] = [
   {title: 'Biometria',type_step: '6', progress: '0', progress_adequacy: '0'},
 ]
 
+interface IParams{
+  item?: DataListProps;
+}
+
 export function Home() {
   const navigation = useNavigation();
   const route = useRoute();
-  const item = route.params;
+  const company = route.params as IParams;
   const theme = useTheme();
+  const { user } = useAuth();
   const [hasCompany, setHasCompany] = useState(false);
   const [hasSteps, setHasSteps] = useState(false);
   const [steps, setSteps] = useState<IStep[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const screenIsFocus = useIsFocused();
 
   useEffect(() => {
-    if(!item){
+    if(!company){
       async function getCompany(){
         const apiWithToken = await api();
         await apiWithToken.get('/company/user')
@@ -71,12 +78,19 @@ export function Home() {
     if(hasCompany){
       async function confirmCreateStep(){
         const apiWithToken = await api();
-        await apiWithToken.get('/step')
+        let extendsUrl = "/teste";
+        if(user.user_type === 'consultor'){
+          extendsUrl = `/${company && company.item && company.item.id}`
+        }
+        await apiWithToken.get(`/step${extendsUrl}`)
         .then(response =>{
           if(response.data.length === 0){
             let flag = 0;
             data.map(async (item) => {
-              await apiWithToken.post('/step',item)
+              if(user.user_type === 'consultor'){
+                extendsUrl = `/${company && company.item && company.item.id}`
+              }
+              await apiWithToken.post(`/step${extendsUrl}`,item)
               .then((response) => {
                 if(response.data){
                   flag++;
@@ -106,9 +120,10 @@ export function Home() {
           }
         });
       }
+      if(screenIsFocus)
       confirmCreateStep();
     }
-  }, [hasCompany,hasSteps])
+  }, [hasCompany,hasSteps, screenIsFocus])
 
   function handleOpenStep(step: IStep){
     navigation.navigate('Step', { step,  name: 'Custom profile header'});

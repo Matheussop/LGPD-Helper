@@ -142,7 +142,6 @@ export function StepDetails() {
   }
 
   async function handleSaveInfo(){
-    console.log(values);
     inputs.map((item: any, index: number) => {
       item[Object.keys(item)[0]] = values[index];
     })
