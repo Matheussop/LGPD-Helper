@@ -4,33 +4,39 @@ function getInputs(type_step: string): Object[]{
   let resp: Object[] = [{}];
 
   switch(type_step){
-    case '1':
+    case '1': //Adequação Manual de Regras
       resp = [
-        { "Informacao 1": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 2": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 3": "", "type" : "string", "description": "Exemplo Description",
+        { "Houve um treinamento dos funcionários ?": "", "type" : "select", "description": { simpleDescription: "Sobre o treinamento", text: 'Houve um treinamento dos funcionários para entendimento e cumprimento dos itens abordados pelo manual', title: "Treinamento de funcionários", moreInfo: true,  },
           "options": [
-            {"value": 'tecnologia', "label": 'Tecnologia'},
-            {"value": 'alimentao', "label": 'Alimentão'},
-            {"value": 'saude', "label": 'Saúde'},
+            {"value": '', "label": ''},
+            {"value": 'sim', "label": 'Sim'},
+            {"value": 'nao', "label": 'Não'},
           ]
         },
-        { "Observações": "", "type" : "textarea", "description": "Alguma Observação a ser colocada ? " },
+        { "Teste ?": "", "type" : "select", "description": { simpleDescription: "Houve um treinamento dos funcionários para entendimento e cumprimento dos itens abordados pelo manual", text: 'Houve um treinamento dos funcionários para entendimento e cumprimento dos itens abordados pelo manual',  moreInfo: true,  },
+          "options": [
+            {"value": '', "label": ''},
+            {"value": 'sim', "label": 'Sim'},
+            {"value": 'nao', "label": 'Não'},
+          ]
+        },
+        { "Informacao 3": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
+        { "Observações": "", "type" : "textarea", "description": { simpleDescription: "Exemplo Descrição" } },
       ];
       break;
     case '2':
       resp = [
-        { "Informacao 1": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 2": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 3": "", "type" : "string", "description": "Exemplo Description" },
-        { "Observações": "", "type" : "textarea", "description": "Alguma Observação a ser colocada ? " },
+        { "Informacao 1": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição2" } },
+        { "Informacao 2": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
+        { "Informacao 3": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
+        { "Observações": "", "type" : "textarea", "description": { simpleDescription: "Exemplo Descrição" } },
       ];
       break;
     case '3':
       resp = [
-        { "Informacao 1": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 2": "", "type" : "string", "description": "Exemplo Description" },
-        { "Exemplo de select": "", "type" : "select", "description": "Exemplo de select feito dinâmico",
+        { "Informacao 1": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição3" } },
+        { "Informacao 2": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
+        { "Exemplo de select": "", "type" : "select", "description": { simpleDescription: "Exemplo Descrição" },
           "options": [
             {"value": 'opcao1', "label": 'Opção 1'},
             {"value": 'opcao2', "label": 'Opção 2'},
@@ -41,24 +47,24 @@ function getInputs(type_step: string): Object[]{
       break;
     case '4':
       resp = [
-        { "Informacao 1": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 2": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 3": "", "type" : "string", "description": "Exemplo Description" },
+        { "Informacao 1": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição4" } },
+        { "Informacao 2": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
+        { "Informacao 3": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
       ];
       break;
     case '5':
       resp = [
-        { "Informacao 1": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 2": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 3": "", "type" : "string", "description": "Exemplo Description" },
-        { "Nome": "", "type" : "string", "description": "Nome do funcionário" },
+        { "Informacao 1": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição5" } },
+        { "Informacao 2": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
+        { "Informacao 3": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
+        { "Nome": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
       ];
       break;
     case '6':
       resp = [
-        { "Informacao 1": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 2": "", "type" : "string", "description": "Exemplo Description" },
-        { "Informacao 3": "", "type" : "string", "description": "Exemplo Description" },
+        { "Informacao 1": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição6" } },
+        { "Informacao 2": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
+        { "Informacao 3": "", "type" : "string", "description": { simpleDescription: "Exemplo Descrição" } },
       ];
       break;
     default:

@@ -10,6 +10,7 @@ import { useAuth } from '../hooks/auth';
 import { Dashboard } from '../screens/Dashboard';
 import { RegisterCompany } from '../screens/RegisterCompany';
 import { StepDescription } from '../screens/StepDescription';
+import { InputDescription } from '../screens/InputDescription';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -42,6 +43,11 @@ const { Navigator, Screen } = createStackNavigator();
         }}
       />
       <Screen name="StepDescription" component={StepDescription} 
+        options={{
+          header: props => <HeaderSteps/>,
+        }}
+      />
+      <Screen name="InputDescription" component={InputDescription} 
         options={{
           header: props => <HeaderSteps/>,
         }}

@@ -13,20 +13,35 @@ import {
 } from './styles';
 import { useTheme } from 'styled-components';
 import { TextInputProps } from 'react-native';
+import { useNavigation, useRoute } from "@react-navigation/native";
 
 interface Props extends TextInputProps { 
   label: string;
   value?: string;
   error?: string;
   textDescripiton?: string;
+  description?: any;
   more?: boolean;
 }
 
-export function InputStep({label, value, textDescripiton, more=true, error, ...rest}: Props) {
+interface Params{
+  step: any;
+}
+
+export function InputStep({label, value, textDescripiton, description, more=true, error, ...rest}: Props) {
   const theme = useTheme();
 
   const [isFilled,setIsFilled] = useState(false);
   const [isFocused,setIsFocused] = useState(false);
+
+  const navigation = useNavigation();
+  const route = useRoute();
+
+  const {step}  = route.params as Params;
+
+  function handleOpenDetails(){ 
+    navigation.navigate('InputDescription', { step, description});
+  }
 
   function handleInputFocused(){
     setIsFocused(true);
@@ -55,7 +70,7 @@ export function InputStep({label, value, textDescripiton, more=true, error, ...r
       { textDescripiton && 
         <DescriptionWrapper>
           <TextDescripiton>{textDescripiton}</TextDescripiton>
-          { more && <DescriptionButton>
+          { more && <DescriptionButton onPress={handleOpenDetails}>
             <Feather name="plus" size={24} color={theme.colors.text_light}/>
           </DescriptionButton>}
         </DescriptionWrapper>

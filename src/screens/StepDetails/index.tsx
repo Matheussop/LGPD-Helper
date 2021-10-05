@@ -189,7 +189,8 @@ export function StepDetails() {
                     label={Object.getOwnPropertyNames(item)[0]}
                     defaultValue={item[Object.keys(item)[0]]}
                     onChangeText={(item) => onChangeValue(item, index)}
-                    textDescripiton={item.description && item.description}
+                    textDescripiton={item.description && item.description.simpleDescription}
+                    description={item.description}
                     />
                   )
                 }else if(item.type === 'textarea'){
@@ -198,7 +199,7 @@ export function StepDetails() {
                     label={Object.getOwnPropertyNames(item)[0]}
                     defaultValue={item[Object.keys(item)[0]]}
                     onChangeText={(item) => onChangeValue(item, index)}
-                    textDescripiton={item.description && item.description}
+                    textDescripiton={item.description && item.description.simpleDescription}
                     multiline={true}
                     more={false}
                   />
@@ -209,7 +210,9 @@ export function StepDetails() {
                     key={Object.getOwnPropertyNames(item)[0]}
                     defaultValue={item[Object.keys(item)[0]]}
                     onValueChange={(item) => onChangeValue(item, index)}
-                    label={Object.getOwnPropertyNames(item)[0]} textDescripiton={item.description && item.description} options={item.options && item.options}/>
+                    label={Object.getOwnPropertyNames(item)[0]} textDescripiton={item.description && item.description.simpleDescription} options={item.options && item.options}
+                    description={item.description}
+                    />
                   )
                 }
               })}
@@ -219,7 +222,7 @@ export function StepDetails() {
           <InputStep key={item.id} label={item.label} textDescripiton={item.textDescripiton} value={value[index]} onChangeText={(value) => changeValue(index, value)}/>
         )} */}
             </ListInputs>
-            <ListFiles>
+            {/* <ListFiles>
               <TitleFiles>Arquivos relacionados a adequação</TitleFiles>
               <ListArq>
                 { 
@@ -256,7 +259,7 @@ export function StepDetails() {
               <OpenFiles onPress={handleOpenImage}>
                 <SubTitles>Escolher nova Imagem</SubTitles>
               </OpenFiles>
-            </ListFiles>
+            </ListFiles> */}
             <Button title="Salvar" onPress={handleSaveInfo}/>
           </View>
         </TouchableWithoutFeedback>

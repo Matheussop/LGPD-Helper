@@ -66,7 +66,7 @@ export const TextDescripiton = styled.Text`
   font-family: ${({ theme }) => theme.fonts.medium};
   font-size: ${RFValue(12)}px;
   padding-left: 5px;
-  width: 90%;
+  width: 85%;
 `;
 
 export const Error = styled.Text`

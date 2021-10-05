@@ -68,8 +68,8 @@ export function Step() {
   }
 
   function handleOpenDescriptionStep() {
-    const id = stepDetail.info && stepDetail.info.id
-    navigation.navigate('StepDescription', { step, data: id});
+    const info = stepDetail.info;
+    navigation.navigate('StepDescription', { step, info});
   }
 
   useEffect(() => {
@@ -138,10 +138,10 @@ export function Step() {
                 <ShowInputStep key={Object.getOwnPropertyNames(item)[0]} label={Object.getOwnPropertyNames(item)[0]} value={item[Object.keys(item)[0]]}/>
               ))}
             </FixedInputs>
-            <SubTitle>Arquivos relacionados ao manual: </SubTitle>
+            {/* <SubTitle>Arquivos relacionados ao manual: </SubTitle>
             <FilesInputs>
 
-            </FilesInputs>
+            </FilesInputs> */}
           </InputsSteps>
           <Footer>
             <Button title={`Detalhe dos dados`} onPress={openDetailsStep} />

@@ -11,31 +11,25 @@ import {
 } from './styles';
 
 interface Params{
-  info: {
-    id?: string;
-    moreInfo: boolean;
-    simpleText: string;
-    text: string;
-    title: string;
-  }
+  description: any;
 }
 
-export function StepDescription() {
+export function InputDescription() {
   const route = useRoute();
-  const {info}  = route.params as Params;
+  const {description}  = route.params as Params;
   
   useEffect(() => {
-    // console.log(info);
+    // console.log(description);
   }, []);
 
   return (
     <Container> 
       <TitleWrapper>
-        <Title>{info.title}</Title>
+        <Title>{description.title}</Title>
       </TitleWrapper>
       <TextBox>
         <Text>
-          {info.text}
+          {description.text}
         </Text>
       </TextBox>
     </Container>
