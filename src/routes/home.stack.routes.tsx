@@ -9,6 +9,7 @@ import { StepDetails } from '../screens/StepDetails';
 import { useAuth } from '../hooks/auth';
 import { Dashboard } from '../screens/Dashboard';
 import { RegisterCompany } from '../screens/RegisterCompany';
+import { StepDescription } from '../screens/StepDescription';
 
 const { Navigator, Screen } = createStackNavigator();
 
@@ -21,7 +22,7 @@ const { Navigator, Screen } = createStackNavigator();
     }} initialRouteName={user && user.user_type === 'consultor' ? 'Company' : 'Home'} >
       <Screen name="Home" component={Home}
         options={{
-          header: props => <Header isBackButton={true}/>,
+          header: props => <Header isBackButton={true} home={true}/>,
         }}
       />
       <Screen name="Company" component={Dashboard}/>
@@ -36,6 +37,11 @@ const { Navigator, Screen } = createStackNavigator();
         }}
       />
       <Screen name="StepDetails" component={StepDetails} 
+        options={{
+          header: props => <HeaderSteps/>,
+        }}
+      />
+      <Screen name="StepDescription" component={StepDescription} 
         options={{
           header: props => <HeaderSteps/>,
         }}

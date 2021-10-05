@@ -16,6 +16,7 @@ interface IUser{
   consultantName?: string,
   photo?: string
   user_type: string;
+  token?: string;
 }
 
 interface IAuthContextData{

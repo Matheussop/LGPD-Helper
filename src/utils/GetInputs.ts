@@ -51,6 +51,7 @@ function getInputs(type_step: string): Object[]{
         { "Informacao 1": "", "type" : "string", "description": "Exemplo Description" },
         { "Informacao 2": "", "type" : "string", "description": "Exemplo Description" },
         { "Informacao 3": "", "type" : "string", "description": "Exemplo Description" },
+        { "Nome": "", "type" : "string", "description": "Nome do funcionário" },
       ];
       break;
     case '6':

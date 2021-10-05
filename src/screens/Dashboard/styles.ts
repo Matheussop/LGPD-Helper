@@ -44,7 +44,7 @@ export const ConsultsList = styled(
 
 export const LoadContainer = styled.View`
   flex: 1;
-  justify-content: center;
+  /* justify-content: center; */
   align-items: center;
 `;
 // export const Title = styled.Text`

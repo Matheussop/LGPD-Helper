@@ -34,7 +34,7 @@ export const ImageProfile = styled.Image`
 `;
 export const Title = styled.Text<TitleProps>`
   margin-left: 18px;
-  font-size: ${({param}) => param && param.item.name ? RFValue(14) : RFValue(18)}px;
+  font-size: ${({param}) => param && param.item && param.item.name ? RFValue(14) : RFValue(18)}px;
   font-family: ${({ theme }) => theme.fonts.regular};
   color: ${({ theme }) => theme.colors.background_primary};
 `;

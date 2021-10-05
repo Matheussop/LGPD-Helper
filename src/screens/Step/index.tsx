@@ -67,6 +67,11 @@ export function Step() {
     navigation.navigate('StepDetails', { step, inputs: stepDetail.inputs, id: stepDetail.id });
   }
 
+  function handleOpenDescriptionStep() {
+    const id = stepDetail.info && stepDetail.info.id
+    navigation.navigate('StepDescription', { step, data: id});
+  }
+
   useEffect(() => {
     async function confirmCreateStepDetails() {
       const apiWithToken = await api();
@@ -118,7 +123,7 @@ export function Step() {
             <TextDescription>
               {stepDetail.info && stepDetail.info.simpleText}
             </TextDescription>
-            <FooterDescription onPress={() => { console.log(stepDetail.info && stepDetail.info.id) }} >
+            <FooterDescription onPress={handleOpenDescriptionStep} >
               <WrapperFooter>
                 <Info>Caso queira ver mais detalhes clique aqui</Info>
                 <Feather name="plus" size={24} color={theme.colors.text} />

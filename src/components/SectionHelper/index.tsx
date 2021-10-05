@@ -13,6 +13,7 @@ import {
    WrapperFooter
 } from './styles';
 import { useTheme } from 'styled-components';
+import { useNavigation } from '@react-navigation/core';
 
 interface Props { 
   data: {
@@ -26,6 +27,11 @@ interface Props {
 
 export function SectionHelper({data}: Props) {
   const theme = useTheme();
+  const navigation = useNavigation();
+
+  function handleOpenDetails(){
+    navigation.navigate('SectionDetails', data);
+  }
 
   return (
     <Container> 
@@ -34,9 +40,9 @@ export function SectionHelper({data}: Props) {
       </TitleWrapper>
       <TextBox>
         <Text>
-          {data.text}
+          {data.simpleText}
         </Text>
-        <Footer onPress={() => {}} >
+        <Footer onPress={handleOpenDetails} >
           <WrapperFooter>
             <Info>Caso queira ver mais detalhes clique aqui</Info>
             <Feather name="plus" size={24} color={theme.colors.text}/>

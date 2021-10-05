@@ -19,13 +19,14 @@ import { useAuth } from '../../hooks/auth';
 import { DataListProps } from '../../screens/Dashboard';
 interface Props {
   isBackButton?: boolean;
+  home?: boolean;
 }
 
 interface Params {
   item: DataListProps;
 }
 
-export function Header(  {isBackButton=false} : Props) {
+export function Header(  {home=false, isBackButton=false} : Props) {
   const theme = useTheme();
   const {user, signOut} = useAuth();
   const navigation = useNavigation();
@@ -49,17 +50,16 @@ export function Header(  {isBackButton=false} : Props) {
     navigation.goBack();
   }
 
-
   return (
     <Container>
       <TitleWreapper >
         <UserWreapper exists={!!user.photo && user && user.user_type === 'consultor' && isBackButton }>
-        {user && user.user_type === 'consultor' && isBackButton && <BackButton onPress={handleBack}/>}
+        { home ?  user && user.user_type === 'consultor' && isBackButton && <BackButton onPress={handleBack}/> : isBackButton && <BackButton onPress={handleBack}/>}
         {user.photo ?  <ImageProfile source={{uri : user.photo}}/> : null}
         </UserWreapper>
         <Wrapper exists={user && user.user_type === 'consultor' && isBackButton } existsPhoto={!!user.photo}>
           <Title param={param}>Olá {user.name}</Title>
-          {param && param.item.name && <NameCompany>Empresa: {param.item.name}</NameCompany>}
+          {param && param.item && param.item.name && <NameCompany>Empresa: {param.item.name}</NameCompany>}
         </Wrapper>
       </TitleWreapper>
       

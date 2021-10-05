@@ -30,35 +30,35 @@ import { SelectInput } from "../../components/SelectInput";
 import api from "../../services/api";
 import { useRoute } from "@react-navigation/native";
 
-const data = [
-  {
-    id: 1,
-    label: "Informação 1",
-    textDescripiton:
-      "Descrição do motivo da utilização da  informação (opcional)",
-  },
-  {
-    id: 2,
-    label: "Informação 2",
-    textDescripiton:
-      "Este informação permitira o consultor avaliar se a empresa esta de acordo com artigo 5 da lei",
-  },
-  {
-    id: 3,
-    label: "Observação",
-    textDescripiton: "Alguma Observação a ser colocada ? ",
-  },
-  {
-    id: 4,
-    label: "Categoria",
-    options: [
-      {value: 'tecnologia', label: 'Tecnologia'},
-      {value: 'alimentao', label: 'Alimentão'},
-      {value: 'saude', label: 'Saúde'},
-    ] as IPickerOptions[],
-    textDescripiton: "Alguma Observação a ser colocada ? ",
-  },
-];
+// const data = [
+//   {
+//     id: 1,
+//     label: "Informação 1",
+//     textDescripiton:
+//       "Descrição do motivo da utilização da  informação (opcional)",
+//   },
+//   {
+//     id: 2,
+//     label: "Informação 2",
+//     textDescripiton:
+//       "Este informação permitira o consultor avaliar se a empresa esta de acordo com artigo 5 da lei",
+//   },
+//   {
+//     id: 3,
+//     label: "Observação",
+//     textDescripiton: "Alguma Observação a ser colocada ? ",
+//   },
+//   {
+//     id: 4,
+//     label: "Categoria",
+//     options: [
+//       {value: 'tecnologia', label: 'Tecnologia'},
+//       {value: 'alimentao', label: 'Alimentão'},
+//       {value: 'saude', label: 'Saúde'},
+//     ] as IPickerOptions[],
+//     textDescripiton: "Alguma Observação a ser colocada ? ",
+//   },
+// ];
 
 interface IFile { 
   name: string;
@@ -123,13 +123,23 @@ export function StepDetails() {
       DocumentPicker.getDocumentAsync({type: "image/*"}).then(async (resp)  =>  {
         if(resp.type === 'success'){
           // const fileName = resp.uri.replace('file://',"");
-          console.log(resp)
           setListImages([...listImages, resp]);
-          // const uri = resp.uri
-          // let type = resp.uri.substring(resp.uri.lastIndexOf(".") + 1);
-          // const form = await new FormData()
-          // await form.append('file', { uri, name: 'media', type: `"application/${type}` } as any)
-          // console.log(form)
+          const uri = resp.uri
+          let type = resp.uri.substring(resp.uri.lastIndexOf(".") + 1);
+          const form = await new FormData()
+          await form.append('file', { uri, name: 'media', type: `"application/${type}` } as any)
+          let headers = {
+            "Content-Type": "multipart/form-data" 
+          }
+          const apiWithToken = await api();
+          await apiWithToken.patch('/users/avatar', form, {"headers" : headers})
+          .catch((error) => {
+            if (error.response) { // get response with a status code not in range 2xx
+              Alert.alert((error.response.status + ''),error.response.data.message);
+            }else {
+              Alert.alert("Error", "Error durante o envio da imagem");
+            }
+          });
         }
       });
     }catch(error: any){
