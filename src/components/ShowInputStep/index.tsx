@@ -17,7 +17,7 @@ interface Props extends TextInputProps {
 export function ShowInputStep({label, value, ...rest}: Props) {
   return (
     <Container >
-      <NameInput>{ label }:</NameInput>
+      <NameInput numberOfLines={3}>{ label }:</NameInput>
       <ValueInput numberOfLines={1}>{ value }</ValueInput>
     </Container>
   ); 

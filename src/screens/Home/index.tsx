@@ -26,13 +26,13 @@ export interface IStep{
 
 const data: IStep[] = [
   {title: 'Adequação Manual de Regras',type_step: '1', progress: '0', progress_adequacy: '0'},
-  {title: 'Política de dados',type_step: '2', progress: '0', progress_adequacy: '0'},
-  {title: 'Currículo',type_step: '3', progress: '0', progress_adequacy: '0'},
+  {title: 'Pré-Contratação',type_step: '2', progress: '0', progress_adequacy: '0'},
+  {title: 'Contratação',type_step: '3', progress: '0', progress_adequacy: '0'},
   {title: 'Termo de desligamento',type_step: '4', progress: '0', progress_adequacy: '0'},
-  {title: 'Imagens',type_step: '5', progress: '0', progress_adequacy: '0'},
-  {title: 'Biometria',type_step: '6', progress: '0', progress_adequacy: '0'},
+  {title: 'Política de dados',type_step: '5', progress: '0', progress_adequacy: '0'},
+  {title: 'Imagens e Biometria',type_step: '6', progress: '0', progress_adequacy: '0'},
 ]
-
+  
 interface IParams{
   item?: DataListProps;
 }
@@ -145,7 +145,7 @@ export function Home() {
           Para ver mais detalhes sobre uma adequação basta
           clicar nela que será redirecionado para a página
           de detalhe da adequação. {'\n'} Obs: O número dentro do 
-          circulo índica a porcentagem de adequação 
+          circulo indica a porcentagem de adequação 
         </TextInfo>
         <ListSteps
         data={steps}

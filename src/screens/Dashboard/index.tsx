@@ -166,17 +166,17 @@ export function Dashboard() {
           />
           <HighlightCards>
             <HighlightCard
-              title="Ultimas consultorias editada"
+              title="Ultimas consultorias editadas"
               name={highlightData.first.name}
               lastConsults={highlightData.first.lastConsults}
             />
             <HighlightCard
-              title="Ultimas Consultorias editada"
+              title="Ultimas Consultorias editadas"
               name={highlightData.second.name} 
               lastConsults={highlightData.second.lastConsults}
             />
             <HighlightCard
-              title="Ultimas Consultorias editada"
+              title="Ultimas Consultorias editadas"
               name={highlightData.third.name}
               lastConsults={highlightData.third.lastConsults}
             />

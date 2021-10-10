@@ -18,6 +18,7 @@ export const Title = styled.Text`
 export const TextBox = styled.View`
   background-color: ${({ theme }) => theme.colors.background_secundary};
   border-radius: 10px;
+  margin-bottom: 10px;
 `;
 
 export const Text = styled.Text`

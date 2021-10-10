@@ -45,7 +45,7 @@ export function AdequacyStep({data, last=false, ...rest}: Props) {
       </StatusProgress>
       <Content>
         <Title>{data.title}</Title>
-        <StatusText>{data.progress}% de preenchimento</StatusText>
+        <StatusText>{parseInt(data.progress).toFixed(0)}% de preenchimento</StatusText>
       </Content>
     </Container>
   );

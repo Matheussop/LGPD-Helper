@@ -134,8 +134,8 @@ export function Step() {
             <Title>Informações do manual</Title>
             <SubTitle>Informações requisitadas:</SubTitle>
             <FixedInputs>
-              {stepDetail.inputs.map((item: any) => (
-                <ShowInputStep key={Object.getOwnPropertyNames(item)[0]} label={Object.getOwnPropertyNames(item)[0]} value={item[Object.keys(item)[0]]}/>
+              {stepDetail.inputs.map((item: any, index: number) => (
+                <ShowInputStep key={index} label={Object.getOwnPropertyNames(item)[0]} value={item[Object.keys(item)[0]]}/>
               ))}
             </FixedInputs>
             {/* <SubTitle>Arquivos relacionados ao manual: </SubTitle>

@@ -191,6 +191,7 @@ export function StepDetails() {
                     onChangeText={(item) => onChangeValue(item, index)}
                     textDescripiton={item.description && item.description.simpleDescription}
                     description={item.description}
+                    more={item.description.moreInfo}
                     />
                   )
                 }else if(item.type === 'textarea'){
@@ -212,6 +213,7 @@ export function StepDetails() {
                     onValueChange={(item) => onChangeValue(item, index)}
                     label={Object.getOwnPropertyNames(item)[0]} textDescripiton={item.description && item.description.simpleDescription} options={item.options && item.options}
                     description={item.description}
+                    more={item.description.moreInfo}
                     />
                   )
                 }
