@@ -16,7 +16,7 @@ import {
 import { ActivityIndicator, StatusBar } from "react-native";
 import { useTheme } from "styled-components";
 import { useAuth } from "../../hooks/auth";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useIsFocused } from "@react-navigation/native";
 import api from "../../services/api";
 
 export interface DataListProps extends ConsultCardData {
@@ -37,7 +37,7 @@ export function Dashboard() {
   const [isLoading, setIsLoading] = useState(true);
   const navigation = useNavigation();
 
-
+  const screenIsFocus = useIsFocused();
   const [data, setData] = useState<DataListProps[]>([]);
   const [highlightData, setHighlightData] = useState<HighlightData>(
     {} as HighlightData
@@ -138,8 +138,9 @@ export function Dashboard() {
   }
 
   useEffect(() => {
+    if(screenIsFocus)
     loadCompanys();
-  }, []);
+  }, [screenIsFocus]);
 
   useFocusEffect(
     useCallback(() => {

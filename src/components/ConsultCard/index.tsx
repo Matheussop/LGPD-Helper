@@ -31,7 +31,7 @@ export function ConsultCard({ data, ...rest} : IProps) {
         height: 15, borderRadius: 10
       }}/> 
       <Footer>
-        <DescriptionBar>{data.progress}% concluída</DescriptionBar>
+        <DescriptionBar>{data.progress.toFixed(0)}% concluída</DescriptionBar>
         <Date>{data.date_last_edit}</Date>
       </Footer>
     </Container>

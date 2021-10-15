@@ -1,5 +1,6 @@
 import { useRoute } from '@react-navigation/core';
 import React, { useEffect } from 'react';
+import { View } from 'react-native';
 
 import {
   Container,
@@ -17,6 +18,7 @@ interface Params{
     simpleText: string;
     text: string;
     title: string;
+    MoreTexts: [];
   }
 }
 
@@ -29,15 +31,34 @@ export function StepDescription() {
   }, []);
 
   return (
-    <Container> 
-      <TitleWrapper>
-        <Title>{info.title}</Title>
-      </TitleWrapper>
-      <TextBox>
-        <Text>
-          {info.text}
-        </Text>
-      </TextBox>
-    </Container>
+    <Container>
+    {!info.MoreTexts &&
+      <>
+        <TitleWrapper>
+          <Title>{info.title}</Title>
+        </TitleWrapper>
+        <TextBox>
+          <Text>
+            {info.text}
+          </Text>
+        </TextBox>
+      </>
+    }
+    {info.MoreTexts &&
+      info.MoreTexts.map((item: any, index: number) => {
+        return (
+          <View key={index}>
+            <TitleWrapper>
+              <Title>{item['Titulo']}</Title>
+            </TitleWrapper>
+            <TextBox>
+              <Text>
+                {item['text']}
+              </Text>
+            </TextBox>
+          </View>
+        )
+      })}
+  </Container>
   );
 }

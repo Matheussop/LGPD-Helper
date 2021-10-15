@@ -97,14 +97,13 @@ export function Profile() {
       });
 
       await schema.validate({ name });
-
       await updatedUser({
-        id: user.id,
+        token: user.token,
         email: user.email,
         name: name,
         consultantName: consultantName,
         user_type: user.user_type,
-        photo: avatar,
+        // photo: avatar,
       });
 
       Alert.alert("Perfil atualizado!");
